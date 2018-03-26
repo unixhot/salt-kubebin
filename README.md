@@ -43,4 +43,25 @@ k8s-node2:
       etcd-name: etcd-node3
 ```
 
-## 3.克隆本项目代码，并执行SaltStack状态。
+## 3.安装Salt-SSH并设置文件路径。
+```
+[root@k8s-master ~]# yum install -y salt-ssh
+[root@k8s-master ~]# vim /etc/salt/master
+file_roots:
+  base:
+    - /srv/salt
+pillar_roots:
+  base:
+    - /srv/pillar
+```
+
+## 4.修改对应的配置参数，本项目使用Salt Pillar保存配置
+```
+[root@k8s-master ~]# vim /srv/pillar/k8s.sls 
+
+```
+
+## 5.执行SaltStack状态
+```
+[root@k8s-master ~]# salt-ssh '*' state.highstate
+```
