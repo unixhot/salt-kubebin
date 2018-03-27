@@ -31,7 +31,19 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 [root@linux-node1 ~]# ssh-copy-id linux-node3
 ```
 
-## 2.Salt SSH管理的机器以及角色分配
+## 2.安装Salt-SSH并设置文件路径。
+```
+[root@linux-node1 ~]# yum install -y salt-ssh
+[root@linux-node1 ~]# vim /etc/salt/master
+file_roots:
+  base:
+    - /srv/salt
+pillar_roots:
+  base:
+    - /srv/pillar
+```
+
+## 3.Salt SSH管理的机器以及角色分配
 
 - k8s-role: 用来设置K8S的角色
 - etcd-role: 用来设置etcd的角色，如果只需要部署一个etcd，只需要在一台机器上设置即可
@@ -68,18 +80,6 @@ linux-node3:
       k8s-role: node
       etcd-role: node
       etcd-name: etcd-node3
-```
-
-## 3.安装Salt-SSH并设置文件路径。
-```
-[root@linux-node1 ~]# yum install -y salt-ssh
-[root@linux-node1 ~]# vim /etc/salt/master
-file_roots:
-  base:
-    - /srv/salt
-pillar_roots:
-  base:
-    - /srv/pillar
 ```
 
 ## 4.修改对应的配置参数，本项目使用Salt Pillar保存配置
@@ -123,4 +123,20 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 ## 5.执行SaltStack状态
 ```
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
+```
+
+## 6.如何新增Kubernetes节点
+
+- 1.设置SSH无密码登录
+- 2.在/etc/salt/roster里面，增加对应的机器
+- 3.执行SaltStack状态salt-ssh '*' state.highstate。
+```
+[root@linux-node1 ~]# vim /etc/salt/roster 
+linux-node4:
+  host: 192.168.56.23
+  user: root
+  priv: /root/.ssh/id_rsa
+  minion_opts:
+    grains:
+      k8s-role: node
 ```
