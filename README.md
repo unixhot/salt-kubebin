@@ -1,13 +1,27 @@
 # salt-kubernetes
 SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 授权、ETCD集群等）
 
-版本明细：Release-v1.0
+## 版本明细：Release-v1.0
 
 - Kubernetes： v1.9.3
 - Etcd: v3.3.1
 - Docker: 17.12.1-ce
 
 建议部署节点：最少三个节点，请配置好主机名解析
+
+## 架构介绍
+
+1.使用Salt Grains进行角色定义，增加灵活性。
+2.使用Salt Pillar进行配置项管理，保证安全性。
+3.使用Salt SSH执行状态，不需要安装Agent，保证通用性。
+4.使用Kubernetes当前稳定版本v1.9.3，保证稳定性。
+
+## 技术交流QQ群（加群请备注来源于Github）：
+- 自动化运维工程师：439084446
+- 云计算与容器架构师：252370310
+- 运维开发工程师：399033250
+
+# 使用手册
 
 ## 1.设置部署节点到其它所有节点的SSH免密码登录（包括本机）
 ```
