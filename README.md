@@ -12,10 +12,10 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 
 ## 架构介绍
 
-1.使用Salt Grains进行角色定义，增加灵活性。
-2.使用Salt Pillar进行配置项管理，保证安全性。
-3.使用Salt SSH执行状态，不需要安装Agent，保证通用性。
-4.使用Kubernetes当前稳定版本v1.9.3，保证稳定性。
+1. 使用Salt Grains进行角色定义，增加灵活性。
+2. 使用Salt Pillar进行配置项管理，保证安全性。
+3. 使用Salt SSH执行状态，不需要安装Agent，保证通用性。
+4. 使用Kubernetes当前稳定版本v1.9.3，保证稳定性。
 
 ## 技术交流QQ群（加群请备注来源于Github）：
 - 自动化运维工程师：439084446
