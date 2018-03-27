@@ -41,6 +41,7 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 
 ## 2.安装Salt-SSH并设置文件路径。
 ```
+[root@linux-node1 ~]# yum install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm 
 [root@linux-node1 ~]# yum install -y salt-ssh
 [root@linux-node1 ~]# vim /etc/salt/master
 file_roots:
