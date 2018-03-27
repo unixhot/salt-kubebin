@@ -4,10 +4,13 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 ## 版本明细：Release-v1.0
 
 - 测试通过系统：CentOS 7.4
+- salt-ssh: 2017.7.4
 - Kubernetes： v1.9.3
 - Etcd: v3.3.1
 - Docker: 17.12.1-ce
 - CNI-Plugins： v0.7.0
+
+请注意，请使用2017.7.4或者以上版本的Salt SSH。
 
 
 建议部署节点：最少三个节点，请配置好主机名解析
