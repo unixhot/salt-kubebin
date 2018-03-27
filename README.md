@@ -145,6 +145,8 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 ```
 
 2.下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载，下载完成后，将文件解压到/srv/salt/k8s/files目录下。
+Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw
+
 ```
 [root@linux-node1 ~]# cd /srv/salt/k8s/files/
 [root@linux-node1 files]# ls -l
