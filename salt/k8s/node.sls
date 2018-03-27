@@ -8,4 +8,4 @@ include:
 kubectl-csr:
   cmd.run:
     - name: /opt/kubernetes/bin/kubectl get csr | grep 'Pending' | awk 'NR>0{print $1}'| xargs /opt/kubernetes/bin/kubectl certificate approve
-    - unless: /opt/kubernetes/bin/kubectl get csr | grep 'Pending'
+    - onlyif: /opt/kubernetes/bin/kubectl get csr | grep 'Pending'
