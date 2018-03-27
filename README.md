@@ -39,6 +39,8 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 
 安装Docker-ce
 ```
+[root@linux-node1 ~]# cd /etc/yum.repos.d/
+[root@linux-node1 yum.repos.d]# wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 [root@linux-node1 ~]# yum install -y docker-ce
 ```
 
