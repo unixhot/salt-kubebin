@@ -25,7 +25,7 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 
 ```
 [root@linux-node1 ~]# vim /etc/salt/roster 
-k8s-master:
+linux-node1:
   host: 192.168.56.20
   user: root
   priv: /root/.ssh/id_rsa
@@ -35,7 +35,7 @@ k8s-master:
       etcd-role: node
       etcd-name: etcd-node1
 
-k8s-node1:
+linux-node2:
   host: 192.168.56.21
   user: root
   priv: /root/.ssh/id_rsa
@@ -45,7 +45,7 @@ k8s-node1:
       etcd-role: node
       etcd-name: etcd-node2
 
-k8s-node2:
+linux-node3:
   host: 192.168.56.22
   user: root
   priv: /root/.ssh/id_rsa
@@ -90,7 +90,10 @@ CLUSTER_DNS_SVC_IP: "10.1.0.2"
 NODE_PORT_RANGE: "20000-40000"
 
 #设置ETCD集群访问地址
-ETCD_ENDPOINTS: "https://192.168.56.20:2379"
+ETCD_ENDPOINTS: "https://192.168.56.20:2379,https://192.168.56.21:2379,https://192.168.56.22:2379"
+
+#设置ETCD集群初始化列表
+ETCD_CLUSTER: "etcd-node1=https://192.168.56.20:2380,etcd-node2=https://192.168.56.21:2380,etcd-node3=https://192.168.56.22:2380"
 
 #设置POD的IP地址段
 POD_CIDR: "10.2.0.0/16"
