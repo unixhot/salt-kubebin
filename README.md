@@ -7,6 +7,8 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 - Kubernetes： v1.9.3
 - Etcd: v3.3.1
 - Docker: 17.12.1-ce
+- CNI-Plugins： v0.7.0
+
 
 建议部署节点：最少三个节点，请配置好主机名解析
 
@@ -30,6 +32,11 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 [root@linux-node1 ~]# ssh-copy-id linux-node1
 [root@linux-node1 ~]# ssh-copy-id linux-node2
 [root@linux-node1 ~]# ssh-copy-id linux-node3
+```
+
+安装Docker-ce
+```
+[root@linux-node1 ~]# yum install -y docker-ce
 ```
 
 ## 2.安装Salt-SSH并设置文件路径。
