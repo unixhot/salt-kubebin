@@ -4,10 +4,13 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 ## 版本明细：Release-v1.0
 
 - 测试通过系统：CentOS 7.4
+- salt-ssh: 2017.7.4
 - Kubernetes： v1.9.3
 - Etcd: v3.3.1
 - Docker: 17.12.1-ce
 - CNI-Plugins： v0.7.0
+
+请注意，请使用2017.7.4或者以上版本的Salt SSH。
 
 
 建议部署节点：最少三个节点，请配置好主机名解析
@@ -41,6 +44,7 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 
 ## 2.安装Salt-SSH并设置文件路径。
 ```
+[root@linux-node1 ~]# yum install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm 
 [root@linux-node1 ~]# yum install -y salt-ssh
 [root@linux-node1 ~]# vim /etc/salt/master
 file_roots:
@@ -141,6 +145,8 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 ```
 
 2.下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载，下载完成后，将文件解压到/srv/salt/k8s/files目录下。
+Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw
+
 ```
 [root@linux-node1 ~]# cd /srv/salt/k8s/files/
 [root@linux-node1 files]# ls -l
