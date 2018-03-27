@@ -86,6 +86,15 @@ linux-node3:
 ## 4.修改对应的配置参数，本项目使用Salt Pillar保存配置
 ```
 [root@linux-node1 ~]# vim /srv/pillar/k8s.sls
+#设置Master的IP地址(必须修改)
+MASTER_IP: "192.168.56.20"
+
+#设置ETCD集群访问地址（必须修改）
+ETCD_ENDPOINTS: "https://192.168.56.20:2379,https://192.168.56.21:2379,https://192.168.56.22:2379"
+
+#设置ETCD集群初始化列表（必须修改）
+ETCD_CLUSTER: "etcd-node1=https://192.168.56.20:2380,etcd-node2=https://192.168.56.21:2380,etcd-node3=https://192.168.56.22:2380"
+
 #通过Grains FQDN自动获取本机IP地址，请注意保证主机名解析到本机IP地址
 NODE_IP: {{ grains['fqdn_ip4'][0] }}
 
@@ -104,17 +113,12 @@ CLUSTER_DNS_SVC_IP: "10.1.0.2"
 #设置Node Port的端口范围
 NODE_PORT_RANGE: "20000-40000"
 
-#设置ETCD集群访问地址
-ETCD_ENDPOINTS: "https://192.168.56.20:2379,https://192.168.56.21:2379,https://192.168.56.22:2379"
 
-#设置ETCD集群初始化列表
-ETCD_CLUSTER: "etcd-node1=https://192.168.56.20:2380,etcd-node2=https://192.168.56.21:2380,etcd-node3=https://192.168.56.22:2380"
 
 #设置POD的IP地址段
 POD_CIDR: "10.2.0.0/16"
 
-#设置Master的IP地址
-MASTER_IP: "192.168.56.20"
+
 
 #设置集群的DNS域名
 CLUSTER_DNS_DOMAIN: "cluster.local."
