@@ -167,7 +167,22 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
 
-## 7.如何新增Kubernetes节点
+## 7.测试Kubernetes安装
+```
+[root@k8s-node1 ~]# kubectl get cs
+NAME                 STATUS    MESSAGE             ERROR
+scheduler            Healthy   ok                  
+controller-manager   Healthy   ok                  
+etcd-0               Healthy   {"health":"true"}   
+etcd-2               Healthy   {"health":"true"}   
+etcd-1               Healthy   {"health":"true"}   
+[root@k8s-node1 ~]# kubectl get node
+NAME            STATUS    ROLES     AGE       VERSION
+192.168.56.21   Ready     <none>    1m        v1.9.3
+192.168.56.22   Ready     <none>    1m        v1.9.3
+```
+
+## 8.如何新增Kubernetes节点
 
 - 1.设置SSH无密码登录
 - 2.在/etc/salt/roster里面，增加对应的机器
