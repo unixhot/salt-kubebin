@@ -3,6 +3,7 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 
 ## 版本明细：Release-v1.0
 
+- 测试通过系统：CentOS 7.4
 - Kubernetes： v1.9.3
 - Etcd: v3.3.1
 - Docker: 17.12.1-ce
@@ -120,12 +121,35 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 
 ```
 
-## 5.执行SaltStack状态
+## 5.获取本项目代码和二进制文件
+
+1. 获取本项目代码，并放置在/srv目录
 ```
+[root@linux-node1 ~]# cd /srv/
+[root@linux-node1 srv]# git clone git@github.com:unixhot/salt-kubernetes.git
+```
+
+2.下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载，下载完成后，将文件解压到/srv/salt/k8s/files目录下。
+```
+[root@linux-node1 ~]# cd /srv/salt/k8s/files/
+[root@linux-node1 files]# ls -l
+total 161760
+drwxr-xr-x 2 root root        94 Mar 28 00:33 cfssl-1.2
+drwxrwxr-x 2 root root       195 Mar 27 23:15 cni-plugins-amd64-v0.7.0
+drwxr-xr-x 2 root root        33 Mar 28 00:33 etcd-v3.3.1-linux-amd64
+drwxr-xr-x 3 root root        17 Mar 28 00:47 k8s-v1.9.3
+```
+
+## 6.执行SaltStack状态
+```
+测试Salt SSH联通性
+[root@linux-node1 ~]# salt-ssh '*' state.highstate
+
+执行高级状态，会根据定义的角色再对应的机器部署对应的服务
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
 
-## 6.如何新增Kubernetes节点
+## 7.如何新增Kubernetes节点
 
 - 1.设置SSH无密码登录
 - 2.在/etc/salt/roster里面，增加对应的机器
