@@ -42,17 +42,35 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 [root@linux-node1 ~]# yum install -y docker-ce
 ```
 
-## 2.安装Salt-SSH并设置文件路径。
+## 2.安装Salt-SSH并克隆本项目代码。
+
+1. 安装Salt SSH
 ```
 [root@linux-node1 ~]# yum install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm 
 [root@linux-node1 ~]# yum install -y salt-ssh
-[root@linux-node1 ~]# vim /etc/salt/master
-file_roots:
-  base:
-    - /srv/salt
-pillar_roots:
-  base:
-    - /srv/pillar
+```
+
+2. 获取本项目代码，并放置在/srv目录
+```
+[root@linux-node1 ~]# cd /srv/
+[root@linux-node1 srv]# git clone git@github.com:unixhot/salt-kubernetes.git
+[root@linux-node1 srv]# cd salt-kubernetes/
+[root@linux-node1 srv]# mv * /srv/
+[root@linux-node1 srv]# cp roster /etc/salt/roster
+[root@linux-node1 srv]# cp master /etc/salt/master
+```
+
+3.下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载，下载完成后，将文件解压到/srv/salt/k8s/files目录下。
+Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw
+
+```
+[root@linux-node1 ~]# cd /srv/salt/k8s/files/
+[root@linux-node1 files]# ls -l
+total 161760
+drwxr-xr-x 2 root root        94 Mar 28 00:33 cfssl-1.2
+drwxrwxr-x 2 root root       195 Mar 27 23:15 cni-plugins-amd64-v0.7.0
+drwxr-xr-x 2 root root        33 Mar 28 00:33 etcd-v3.3.1-linux-amd64
+drwxr-xr-x 3 root root        17 Mar 28 00:47 k8s-v1.9.3
 ```
 
 ## 3.Salt SSH管理的机器以及角色分配
@@ -136,26 +154,7 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 
 ```
 
-## 5.获取本项目代码和二进制文件
 
-1. 获取本项目代码，并放置在/srv目录
-```
-[root@linux-node1 ~]# cd /srv/
-[root@linux-node1 srv]# git clone git@github.com:unixhot/salt-kubernetes.git
-```
-
-2.下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载，下载完成后，将文件解压到/srv/salt/k8s/files目录下。
-Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw
-
-```
-[root@linux-node1 ~]# cd /srv/salt/k8s/files/
-[root@linux-node1 files]# ls -l
-total 161760
-drwxr-xr-x 2 root root        94 Mar 28 00:33 cfssl-1.2
-drwxrwxr-x 2 root root       195 Mar 27 23:15 cni-plugins-amd64-v0.7.0
-drwxr-xr-x 2 root root        33 Mar 28 00:33 etcd-v3.3.1-linux-amd64
-drwxr-xr-x 3 root root        17 Mar 28 00:47 k8s-v1.9.3
-```
 
 ## 6.执行SaltStack状态
 ```
