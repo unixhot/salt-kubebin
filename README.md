@@ -31,7 +31,7 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 # 使用手册
 ## 0.系统初始化
 
-1. 设置主机名
+1. 设置主机名！！！
 2. 设置/etc/hosts保证主机名能够解析
 3. 关闭SELinux和防火墙
 
