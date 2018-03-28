@@ -1,5 +1,5 @@
 # salt-kubernetes
-SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 授权、ETCD集群等）
+SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 授权、Flannel网络、ETCD集群等）
 
 ## 版本明细：Release-v1.0
 
