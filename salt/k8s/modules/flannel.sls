@@ -1,7 +1,7 @@
 flannel-key:
   file.managed:
     - name: /opt/kubernetes/ssl/flanneld-csr.json
-    - source: salt://k8s/templates/cni/flanneld-csr.json.template
+    - source: salt://k8s/templates/flannel/flanneld-csr.json.template
     - user: root
     - group: root
     - mode: 644
