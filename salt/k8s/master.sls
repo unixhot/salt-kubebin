@@ -6,3 +6,4 @@ include:
   - k8s.modules.controller-manager
   - k8s.modules.scheduler
   - k8s.modules.kubectl
+  - k8s.modules.flannel
