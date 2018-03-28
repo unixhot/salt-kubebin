@@ -156,8 +156,13 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 [root@linux-node1 ~]# salt-ssh '*' test.ping
 
 执行高级状态，会根据定义的角色再对应的机器部署对应的服务
-[root@linux-node1 ~]# salt-ssh '*' state.highstate
+5.1 部署Etcd，由于Etcd是基础组建，需要先部署
+[root@linux-node1 ~]# salt-ssh '*' state.sls k8s.etcd
+
+5.2 部署K8S集群
+[root@linux-node1 ~]# salt-ssh 'linux-node1' state.highstate
 ```
+由于包比较大，这里执行时间较长，5分钟+，如果执行有失败可以再次执行即可！
 
 ## 6.测试Kubernetes安装（请新打开一个窗口，保证环境变量生效！）
 ```
@@ -177,9 +182,27 @@ NAME            STATUS    ROLES     AGE       VERSION
 ```
 [root@linux-node1 ~]# kubectl run net-test --image=alpine --replicas=2 sleep 360000
 deployment "net-test" created
+需要等待拉取镜像，可能稍有的慢，请等待。
+[root@linux-node1 ~]# kubectl get pod -o wide
+NAME                        READY     STATUS    RESTARTS   AGE       IP          NODE
+net-test-74f45db489-9hr74   1/1       Running   0          48s       10.2.43.2   192.168.56.22
+net-test-74f45db489-rkfjs   1/1       Running   0          48s       10.2.59.2   192.168.56.21
 
-需要等待
+测试联通性
+[root@linux-node1 ~]# ping -c 1 10.2.43.2
+PING 10.2.43.2 (10.2.43.2) 56(84) bytes of data.
+64 bytes from 10.2.43.2: icmp_seq=1 ttl=61 time=3.11 ms
 
+--- 10.2.43.2 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 3.114/3.114/3.114/0.000 ms
+[root@linux-node1 ~]# ping -c 1 10.2.59.2
+PING 10.2.59.2 (10.2.59.2) 56(84) bytes of data.
+64 bytes from 10.2.59.2: icmp_seq=1 ttl=61 time=1.23 ms
+
+--- 10.2.59.2 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 1.230/1.230/1.230/0.000 ms
 ```
 ## 7.如何新增Kubernetes节点
 
