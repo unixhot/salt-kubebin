@@ -159,7 +159,7 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
 
-## 6.测试Kubernetes安装
+## 6.测试Kubernetes安装（请新打开一个窗口，保证环境变量生效！）
 ```
 [root@k8s-node1 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
@@ -173,7 +173,14 @@ NAME            STATUS    ROLES     AGE       VERSION
 192.168.56.21   Ready     <none>    1m        v1.9.3
 192.168.56.22   Ready     <none>    1m        v1.9.3
 ```
+## 7.测试Kubernetes集群和Flannel网络
+```
+[root@linux-node1 ~]# kubectl run net-test --image=alpine --replicas=2 sleep 360000
+deployment "net-test" created
 
+需要等待
+
+```
 ## 7.如何新增Kubernetes节点
 
 - 1.设置SSH无密码登录
