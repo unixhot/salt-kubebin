@@ -160,7 +160,7 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 [root@linux-node1 ~]# salt-ssh '*' state.sls k8s.etcd
 
 5.2 部署K8S集群
-[root@linux-node1 ~]# salt-ssh 'linux-node1' state.highstate
+[root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
 由于包比较大，这里执行时间较长，5分钟+，如果执行有失败可以再次执行即可！
 
