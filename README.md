@@ -156,8 +156,9 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 [root@linux-node1 ~]# salt-ssh '*' test.ping
 
 执行高级状态，会根据定义的角色再对应的机器部署对应的服务
-5.1 部署Etcd，由于Etcd是基础组建，需要先部署
-[root@linux-node1 ~]# salt-ssh '*' state.sls k8s.etcd
+
+5.1 部署Etcd，由于Etcd是基础组建，需要先部署。
+[root@linux-node1 ~]# salt-ssh -L 'linux-node1,linux-node2,linux-node3'state.sls k8s.etcd
 
 5.2 部署K8S集群
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
