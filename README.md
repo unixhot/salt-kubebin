@@ -10,11 +10,7 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 - Docker: 17.12.1-ce
 - Flannel： v0.10.0
 - CNI-Plugins： v0.7.0
-
-请注意，请使用2017.7.4或者以上版本的Salt SSH。
-
-
-建议部署节点：最少三个节点，请配置好主机名解析
+建议部署节点：最少三个节点，请配置好主机名解析（必备）
 
 ## 架构介绍
 
@@ -53,8 +49,7 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 
 2.2 获取本项目代码，并放置在/srv目录
 ```
-[root@linux-node1 ~]# cd /srv/
-[root@linux-node1 srv]# git clone git@github.com:unixhot/salt-kubernetes.git
+[root@linux-node1 ~]# git clone https://github.com/unixhot/salt-kubernetes.git
 [root@linux-node1 srv]# cd salt-kubernetes/
 [root@linux-node1 srv]# mv * /srv/
 [root@linux-node1 srv]# cd /srv/
@@ -162,7 +157,7 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 
 执行高级状态，会根据定义的角色再对应的机器部署对应的服务
 
-5.1 部署Etcd，由于Etcd是基础组建，需要先部署。
+5.1 部署Etcd，由于Etcd是基础组建，需要先部署，目标为部署etcd的节点。
 [root@linux-node1 ~]# salt-ssh -L 'linux-node1,linux-node2,linux-node3'state.sls k8s.etcd
 
 5.2 部署K8S集群
@@ -226,3 +221,5 @@ linux-node4:
       k8s-role: node
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
+
+注意：不要相信自己，要相信电脑！！！
