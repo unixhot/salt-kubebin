@@ -52,34 +52,25 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 [root@linux-node1 srv]# git clone git@github.com:unixhot/salt-kubernetes.git
 [root@linux-node1 srv]# cd salt-kubernetes/
 [root@linux-node1 srv]# mv * /srv/
+[root@linux-node1 srv]# cd /srv/
 [root@linux-node1 srv]# cp roster /etc/salt/roster
 [root@linux-node1 srv]# cp master /etc/salt/master
 ```
 
-2.3 测试Salt SSH连通性
-```
-[root@k8s-master srv]# salt-ssh '*' test.ping
-linux-node1:
-    True
-linux-node3:
-    True
-linux-node2:
-    True
-
-```
-
 2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载。
-下载完成后，将文件解压到/srv/salt/k8s/files目录下。
+下载完成后，将文件移动到/srv/salt/k8s/目录下，并解压
 Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw
 
 ```
-[root@linux-node1 ~]# cd /srv/salt/k8s/files/
-[root@linux-node1 files]# ls -l
-total 161760
-drwxr-xr-x 2 root root        94 Mar 28 00:33 cfssl-1.2
-drwxrwxr-x 2 root root       195 Mar 27 23:15 cni-plugins-amd64-v0.7.0
-drwxr-xr-x 2 root root        33 Mar 28 00:33 etcd-v3.3.1-linux-amd64
-drwxr-xr-x 3 root root        17 Mar 28 00:47 k8s-v1.9.3
+[root@linux-node1 ~]# cd /srv/salt/k8s/
+[root@linux-node1 k8s]# unzip k8s-v1.9.3.zip 
+[root@linux-node1 k8s]# ls -l files/
+total 0
+drwxr-xr-x 2 root root  94 Mar 28 00:33 cfssl-1.2
+drwxrwxr-x 2 root root 195 Mar 27 23:15 cni-plugins-amd64-v0.7.0
+drwxr-xr-x 2 root root  33 Mar 28 00:33 etcd-v3.3.1-linux-amd64
+drwxr-xr-x 2 root root  47 Mar 28 12:05 flannel-v0.10.0-linux-amd64
+drwxr-xr-x 3 root root  17 Mar 28 00:47 k8s-v1.9.3
 ```
 
 ## 3.Salt SSH管理的机器以及角色分配
@@ -162,7 +153,7 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 ## 5.执行SaltStack状态
 ```
 测试Salt SSH联通性
-[root@linux-node1 ~]# salt-ssh '*' state.highstate
+[root@linux-node1 ~]# salt-ssh '*' test.ping
 
 执行高级状态，会根据定义的角色再对应的机器部署对应的服务
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
