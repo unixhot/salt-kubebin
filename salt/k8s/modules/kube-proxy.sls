@@ -55,8 +55,6 @@ kube-proxy-service:
         NODE_IP: {{ pillar['NODE_IP'] }}
   cmd.run:
     - name: systemctl daemon-reload
-    - watch:
-      - file: kube-proxy-service
   service.running:
     - name: kube-proxy
     - enable: True

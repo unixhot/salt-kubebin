@@ -19,8 +19,6 @@ kube-controller-manager-service:
         POD_CIDR: {{ pillar['POD_CIDR'] }}
   cmd.run:
     - name: systemctl daemon-reload
-    - watch:
-      - file: kube-controller-manager-service
   service.running:
     - name: kube-controller-manager
     - enable: True

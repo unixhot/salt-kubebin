@@ -1,6 +1,7 @@
 include:
   - k8s.modules.cni
   - k8s.modules.base-dir
+  - k8s.modules.docker
 
 kubelet-workdir:
   file.directory:
@@ -49,8 +50,6 @@ kubelet-service:
         CLUSTER_DNS_DOMAIN: {{ pillar['CLUSTER_DNS_DOMAIN'] }}
   cmd.run:
     - name: systemctl daemon-reload
-    - watch:
-      - file: kubelet-service
   service.running:
     - name: kubelet
     - enable: True

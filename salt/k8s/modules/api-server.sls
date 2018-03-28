@@ -55,8 +55,6 @@ kube-apiserver-service:
         ETCD_ENDPOINTS: {{ pillar['ETCD_ENDPOINTS'] }}
   cmd.run:
     - name: systemctl daemon-reload
-    - watch:
-      - file: kube-apiserver-service
   service.running:
     - name: kube-apiserver 
     - enable: True
