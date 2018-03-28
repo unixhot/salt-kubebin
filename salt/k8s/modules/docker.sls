@@ -1,3 +1,5 @@
+include:
+  - k8s.modules.base-dir
 docker-install:
   file.managed:
     - name: /etc/yum.repos.d/docker-ce.repo
