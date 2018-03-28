@@ -1,4 +1,5 @@
 include:
+  - k8s.modules.docker
   - k8s.modules.ca-file
   - k8s.modules.cfssl
   - k8s.modules.kubectl
