@@ -8,6 +8,7 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 - Kubernetes： v1.9.3
 - Etcd: v3.3.1
 - Docker: 17.12.1-ce
+- Flannel： v0.10.0
 - CNI-Plugins： v0.7.0
 
 请注意，请使用2017.7.4或者以上版本的Salt SSH。
@@ -37,22 +38,15 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 [root@linux-node1 ~]# ssh-copy-id linux-node3
 ```
 
-安装Docker-ce
-```
-[root@linux-node1 ~]# cd /etc/yum.repos.d/
-[root@linux-node1 yum.repos.d]# wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-[root@linux-node1 ~]# yum install -y docker-ce
-```
-
 ## 2.安装Salt-SSH并克隆本项目代码。
 
-1. 安装Salt SSH
+2.1 安装Salt SSH
 ```
 [root@linux-node1 ~]# yum install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm 
 [root@linux-node1 ~]# yum install -y salt-ssh
 ```
 
-2. 获取本项目代码，并放置在/srv目录
+2.2 获取本项目代码，并放置在/srv目录
 ```
 [root@linux-node1 ~]# cd /srv/
 [root@linux-node1 srv]# git clone git@github.com:unixhot/salt-kubernetes.git
@@ -62,7 +56,20 @@ SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 
 [root@linux-node1 srv]# cp master /etc/salt/master
 ```
 
-3.下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载，下载完成后，将文件解压到/srv/salt/k8s/files目录下。
+2.3 测试Salt SSH连通性
+```
+[root@k8s-master srv]# salt-ssh '*' test.ping
+linux-node1:
+    True
+linux-node3:
+    True
+linux-node2:
+    True
+
+```
+
+2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载。
+下载完成后，将文件解压到/srv/salt/k8s/files目录下。
 Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw
 
 ```
@@ -144,21 +151,15 @@ CLUSTER_DNS_SVC_IP: "10.1.0.2"
 #设置Node Port的端口范围
 NODE_PORT_RANGE: "20000-40000"
 
-
-
 #设置POD的IP地址段
 POD_CIDR: "10.2.0.0/16"
-
-
 
 #设置集群的DNS域名
 CLUSTER_DNS_DOMAIN: "cluster.local."
 
 ```
 
-
-
-## 6.执行SaltStack状态
+## 5.执行SaltStack状态
 ```
 测试Salt SSH联通性
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
@@ -167,7 +168,7 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
 
-## 7.测试Kubernetes安装
+## 6.测试Kubernetes安装
 ```
 [root@k8s-node1 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
@@ -182,7 +183,7 @@ NAME            STATUS    ROLES     AGE       VERSION
 192.168.56.22   Ready     <none>    1m        v1.9.3
 ```
 
-## 8.如何新增Kubernetes节点
+## 7.如何新增Kubernetes节点
 
 - 1.设置SSH无密码登录
 - 2.在/etc/salt/roster里面，增加对应的机器
@@ -196,4 +197,5 @@ linux-node4:
   minion_opts:
     grains:
       k8s-role: node
+[root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
