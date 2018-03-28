@@ -1,6 +1,7 @@
 include:
   - k8s.modules.ca-file
   - k8s.modules.cfssl
+  - k8s.modules.cni
   - k8s.modules.api-server
   - k8s.modules.controller-manager
   - k8s.modules.scheduler

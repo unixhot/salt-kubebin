@@ -1,0 +1,6 @@
+FLANNEL_ETCD="-etcd-endpoints={{ ETCD_ENDPOINTS }}"
+FLANNEL_ETCD_KEY="-etcd-prefix=/coreos.com/network"
+FLANNEL_ETCD_CAFILE="--etcd-cafile=/opt/kubernetes/ssl/ca.pem"
+FLANNEL_ETCD_CERTFILE="--etcd-certfile=/opt/kubernetes/ssl/flanneld.pem"
+FLANNEL_ETCD_KEYFILE="--etcd-keyfile=/opt/kubernetes/ssl/flanneld-key.pem"
+

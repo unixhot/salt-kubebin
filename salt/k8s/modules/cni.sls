@@ -23,3 +23,4 @@ cni-bin:
     - source: salt://k8s/files/cni-plugins-amd64-v0.7.0/
     - user: root
     - group: root
+    - file_mode: 755
