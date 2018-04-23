@@ -115,3 +115,27 @@ mk /kubernetes/network/config '{ "Network": "10.2.0.0/16", "Backend": { "Type": 
 ```
 [root@linux-node1 ~]# systemctl status flannel
 ```
+
+## 配置Docker使用Flannel
+```
+[root@linux-node1 ~]# vim /usr/lib/systemd/system/docker.service
+[Unit] #在Unit下面修改After和增加Requires
+After=network-online.target firewalld.service flannel.service
+Wants=network-online.target
+Requires=flannel.service
+
+[Service] #增加EnvironmentFile=-/run/flannel/docker
+Type=notify
+EnvironmentFile=-/run/flannel/docker
+ExecStart=/usr/bin/dockerd $DOCKER_OPTS
+```
+将配置复制到另外两个阶段
+```
+# scp /usr/lib/systemd/system/docker.service 192.168.56.12:/usr/lib/systemd/system/
+# scp /usr/lib/systemd/system/docker.service 192.168.56.13:/usr/lib/systemd/system/
+```
+重启Docker
+```
+[root@linux-node1 ~]# systemctl daemon-reload
+[root@linux-node1 ~]# systemctl restart docker
+```
