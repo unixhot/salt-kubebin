@@ -198,3 +198,92 @@ WantedBy=multi-user.target
 [root@linux-node1 scripts]# systemctl start kube-scheduler
 [root@linux-node1 scripts]# systemctl status kube-scheduler
 ```
+
+## 部署kubectl 命令行工具
+
+1.准备二进制命令包
+```
+[root@linux-node1 ~]# cd /usr/local/src/kubernetes/client/bin
+[root@linux-node1 bin]# cp kubectl /opt/kubernetes/bin/
+```
+
+2.创建 admin 证书签名请求
+```
+[root@linux-node1 ~]# cd /usr/local/src/ssl/
+[root@linux-node1 ssl]# vim admin-csr.json
+{
+  "CN": "admin",
+  "hosts": [],
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "CN",
+      "ST": "BeiJing",
+      "L": "BeiJing",
+      "O": "system:masters",
+      "OU": "System"
+    }
+  ]
+}
+```
+
+3.生成 admin 证书和私钥：
+```
+[root@linux-node1 ssl]# cfssl gencert -ca=/opt/kubernetes/ssl/ca.pem \
+   -ca-key=/opt/kubernetes/ssl/ca-key.pem \
+   -config=/opt/kubernetes/ssl/ca-config.json \
+   -profile=kubernetes admin-csr.json | cfssljson -bare admin
+[root@linux-node1 ssl]# ls -l admin*
+-rw-r--r-- 1 root root 1009 Mar  5 12:29 admin.csr
+-rw-r--r-- 1 root root  229 Mar  5 12:28 admin-csr.json
+-rw------- 1 root root 1675 Mar  5 12:29 admin-key.pem
+-rw-r--r-- 1 root root 1399 Mar  5 12:29 admin.pem
+
+[root@linux-node1 src]# mv admin*.pem /opt/kubernetes/ssl/
+```
+
+4.设置集群参数
+```
+[root@linux-node1 src]# kubectl config set-cluster kubernetes \
+   --certificate-authority=/opt/kubernetes/ssl/ca.pem \
+   --embed-certs=true \
+   --server=https://192.168.56.11:6443
+Cluster "kubernetes" set.
+```
+
+5.设置客户端认证参数
+```
+[root@linux-node1 src]# kubectl config set-credentials admin \
+   --client-certificate=/opt/kubernetes/ssl/admin.pem \
+   --embed-certs=true \
+   --client-key=/opt/kubernetes/ssl/admin-key.pem
+User "admin" set.
+```
+
+6.设置上下文参数
+```
+[root@linux-node1 src]# kubectl config set-context kubernetes \
+   --cluster=kubernetes \
+   --user=admin
+Context "kubernetes" created.
+```
+
+7.设置默认上下文
+```
+[root@linux-node1 src]# kubectl config use-context kubernetes
+Switched to context "kubernetes".
+```
+
+8.使用kubectl工具
+```
+[root@linux-node1 ~]# kubectl get cs
+NAME                 STATUS    MESSAGE             ERROR
+controller-manager   Healthy   ok                  
+scheduler            Healthy   ok                  
+etcd-1               Healthy   {"health":"true"}   
+etcd-2               Healthy   {"health":"true"}   
+etcd-0               Healthy   {"health":"true"}   
+```
