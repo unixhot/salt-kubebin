@@ -1,5 +1,6 @@
 # salt-kubernetes
-SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 授权、Flannel网络、ETCD集群等）
+- SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 授权、Flannel网络、ETCD集群等）。
+- 手动部署步骤请看最下面的文档。
 
 ## 版本明细：Release-v1.0
 
@@ -234,3 +235,7 @@ linux-node4:
 - [Flannel网络部署](docs/flannel.md)
 - [CoreDNS部署](docs/coredns.md)
 - [Dashboard部署](docs/dashboard.md)
+
+# 微职位：自动化运维工程师
+
+[https://ke.qq.com/course/291631](https://ke.qq.com/course/291631)
