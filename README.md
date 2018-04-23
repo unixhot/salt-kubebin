@@ -223,3 +223,14 @@ linux-node4:
 ```
 
 注意：不要相信自己，要相信电脑！！！
+
+# 手动部署
+
+- [系统初始化](docs/init.md)
+- [CA证书制作](docs/ca.md)
+- [ETCD集群部署](docs/etcd.md)
+- [Master节点部署](docs/master.md)
+- [Node节点部署](docs/node.md)
+- [Flannel网络部署](docs/flannel.md)
+- [CoreDNS部署](docs/coredns.md)
+- [Dashboard部署](docs/dashboard.md)
