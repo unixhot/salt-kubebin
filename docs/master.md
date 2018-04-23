@@ -6,6 +6,7 @@
 [root@linux-node1 kubernetes]# cp server/bin/kube-controller-manager /opt/kubernetes/bin/
 [root@linux-node1 kubernetes]# cp server/bin/kube-scheduler /opt/kubernetes/bin/
 ```
+
 ### 1.创建生成CSR的 JSON 配置文件
 ```
 [root@linux-node1 src]# vim kubernetes-csr.json
@@ -46,7 +47,6 @@
 [root@linux-node1 src]# cp kubernetes*.pem /opt/kubernetes/ssl/
 [root@linux-node1 ~]# scp kubernetes*.pem 192.168.56.12:/opt/kubernetes/ssl/
 [root@linux-node1 ~]# scp kubernetes*.pem 192.168.56.13:/opt/kubernetes/ssl/
-
 ```
 
 ### 3.创建 kube-apiserver 使用的客户端 token 文件
@@ -62,7 +62,7 @@ ad6d5bb607a186796d8861557df0d17f,kubelet-bootstrap,10001,"system:kubelet-bootstr
 [root@linux-node1 ~]# vim /opt/kubernetes/ssl/basic-auth.csv
 admin,admin,1
 readonly,readonly,2
-``
+```
 
 ### 5.部署Kubernetes API Server
 ```
