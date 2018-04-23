@@ -16,7 +16,15 @@
 
 ## 2.准备部署目录
 ```
-[root@linux-node1 kubernetes]# mkdir -p /opt/kubernetes/{cfg,bin,ssl,log}
+  mkdir -p /opt/kubernetes/{cfg,bin,ssl,log}
 ```
 
 ## 3.准备软件包
+
+```
+解压软件包
+[root@linux-node1 src]# tar zxf kubernetes.tar.gz 
+[root@linux-node1 src]# tar zxf kubernetes-server-linux-amd64.tar.gz 
+[root@linux-node1 src]# tar zxf kubernetes-client-linux-amd64.tar.gz
+[root@linux-node1 src]# tar zxf kubernetes-node-linux-amd64.tar.gz
+```
