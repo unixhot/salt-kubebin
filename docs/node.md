@@ -50,7 +50,7 @@ Switched to context "default".
 [root@linux-node1 kubernetes]# cp bootstrap.kubeconfig /opt/kubernetes/cfg
 [root@linux-node1 kubernetes]# scp bootstrap.kubeconfig 192.168.56.12:/opt/kubernetes/cfg
 [root@linux-node1 kubernetes]# scp bootstrap.kubeconfig 192.168.56.13:/opt/kubernetes/cfg
-``
+```
 
 部署kubelet
 1.设置CNI支持
