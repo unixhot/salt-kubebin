@@ -61,10 +61,11 @@ Switched to context "default".
         "name": "flannel",
         "type": "flannel",
         "delegate": {
-            "bridge": "docker0",
-            "mtu": 1400
+		"hairpinMode": true,
+    		"isDefaultGateway": true
         }
 }
+
 ```
 
 2.创建kubelet目录
