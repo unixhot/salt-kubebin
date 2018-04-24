@@ -237,3 +237,4 @@ linux-node4:
 - [Node节点部署](docs/node.md)
 - [Flannel网络部署](docs/flannel.md)
 - [创建第一个K8S应用](docs/app.md)
+- [CoreDNS和Dashboard部署](docs/dashboard.md)
