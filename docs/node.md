@@ -61,10 +61,11 @@ Switched to context "default".
         "name": "flannel",
         "type": "flannel",
         "delegate": {
-		"hairpinMode": true,
-    		"isDefaultGateway": true
+            "bridge": "docker0",
+            "mtu": 1400
         }
 }
+
 
 ```
 
