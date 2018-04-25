@@ -62,6 +62,7 @@ Switched to context "default".
         "type": "flannel",
         "delegate": {
             "bridge": "docker0",
+            "isDefaultGateway": true,
             "mtu": 1400
         }
 }
