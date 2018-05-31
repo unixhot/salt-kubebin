@@ -34,6 +34,11 @@
 1. 设置主机名！！！
 2. 设置/etc/hosts保证主机名能够解析
 3. 关闭SELinux和防火墙
+4. 更新yum源
+[root@linux-node1 ~]# rpm -ivh http://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
+5. 安装一些依赖包
+[root@linux-node1 ~]# yum install -y net-tools vim lrzsz screen lsof tcpdump nc mtr nmap wget
+
 
 ## 1.设置部署节点到其它所有节点的SSH免密码登录（包括本机）
 ```
