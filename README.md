@@ -86,7 +86,7 @@ drwxr-xr-x 3 root root  17 Mar 28 00:47 k8s-v1.9.3
 ```
 [root@linux-node1 ~]# vim /etc/salt/roster 
 linux-node1:
-  host: 192.168.56.20
+  host: 192.168.56.11
   user: root
   priv: /root/.ssh/id_rsa
   minion_opts:
@@ -96,7 +96,7 @@ linux-node1:
       etcd-name: etcd-node1
 
 linux-node2:
-  host: 192.168.56.21
+  host: 192.168.56.12
   user: root
   priv: /root/.ssh/id_rsa
   minion_opts:
@@ -106,7 +106,7 @@ linux-node2:
       etcd-name: etcd-node2
 
 linux-node3:
-  host: 192.168.56.22
+  host: 192.168.56.13
   user: root
   priv: /root/.ssh/id_rsa
   minion_opts:
@@ -120,13 +120,13 @@ linux-node3:
 ```
 [root@linux-node1 ~]# vim /srv/pillar/k8s.sls
 #设置Master的IP地址(必须修改)
-MASTER_IP: "192.168.56.20"
+MASTER_IP: "192.168.56.11"
 
 #设置ETCD集群访问地址（必须修改）
-ETCD_ENDPOINTS: "https://192.168.56.20:2379,https://192.168.56.21:2379,https://192.168.56.22:2379"
+ETCD_ENDPOINTS: "https://192.168.56.11:2379,https://192.168.56.12:2379,https://192.168.56.13:2379"
 
 #设置ETCD集群初始化列表（必须修改）
-ETCD_CLUSTER: "etcd-node1=https://192.168.56.20:2380,etcd-node2=https://192.168.56.21:2380,etcd-node3=https://192.168.56.22:2380"
+ETCD_CLUSTER: "etcd-node1=https://192.168.56.11:2380,etcd-node2=https://192.168.56.12:2380,etcd-node3=https://192.168.56.13:2380"
 
 #通过Grains FQDN自动获取本机IP地址，请注意保证主机名解析到本机IP地址
 NODE_IP: {{ grains['fqdn_ip4'][0] }}
@@ -217,7 +217,7 @@ rtt min/avg/max/mdev = 1.230/1.230/1.230/0.000 ms
 ```
 [root@linux-node1 ~]# vim /etc/salt/roster 
 linux-node4:
-  host: 192.168.56.23
+  host: 192.168.56.14
   user: root
   priv: /root/.ssh/id_rsa
   minion_opts:
