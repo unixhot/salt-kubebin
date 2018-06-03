@@ -13,6 +13,12 @@ coredns-77c989547b-kncd5                1/1       Running   0          6m
 ## 创建Dashboard
 ```
 [root@linux-node1 ~]# kubectl create -f dashboard/
+[root@linux-node1 ~]# kubectl cluster-info
+Kubernetes master is running at https://192.168.56.11:6443
+kubernetes-dashboard is running at https://192.168.56.11:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
 ```
 
 ```
