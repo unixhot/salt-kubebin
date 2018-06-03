@@ -1,24 +1,21 @@
 # SaltStack自动化部署Kubernetes
-- SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 授权、Flannel网络、ETCD集群、Kuber-Proxy使用LVS等）。
-- 手动部署步骤请看最下面的文档（目前已更新至v.1.10.1）。
+- SaltStack自动化部署Kubernetes v1.10.3版本（支持TLS双向认证、RBAC授权、Flannel网络、ETCD集群、Kuber-Proxy使用LVS等）。
 
-## 版本明细：Release-v1.0
-
+## 版本明细：Release-v1.10.3
 - 测试通过系统：CentOS 7.4
-- salt-ssh: 2017.7.4
-- Kubernetes： v1.9.3
-- Etcd: v3.3.1
-- Docker: 17.12.1-ce
-- Flannel： v0.10.0
+- salt-ssh:     2017.7.4
+- Kubernetes：  v1.10.3
+- Etcd:         v3.3.1
+- Docker:       17.12.1-ce
+- Flannel：     v0.10.0
 - CNI-Plugins： v0.7.0
 建议部署节点：最少三个节点，请配置好主机名解析（必备）
 
 ## 架构介绍
-
 1. 使用Salt Grains进行角色定义，增加灵活性。
 2. 使用Salt Pillar进行配置项管理，保证安全性。
 3. 使用Salt SSH执行状态，不需要安装Agent，保证通用性。
-4. 使用Kubernetes当前稳定版本v1.9.3，保证稳定性。
+4. 使用Kubernetes当前稳定版本v1.10.3，保证稳定性。
 
 ## 技术交流QQ群（加群请备注来源于Github）：
 - 自动化运维工程师：439084446
@@ -27,7 +24,6 @@
 
 # 使用手册
 ## 0.系统初始化
-
 1. 设置主机名！！！
 2. 设置/etc/hosts保证主机名能够解析
 3. 关闭SELinux和防火墙
