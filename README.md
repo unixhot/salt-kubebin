@@ -23,6 +23,24 @@
 - 运维开发工程师：399033250
 
 # 使用手册
+<table border="0">
+    <tr>
+        <td><strong>手动部署</strong></td>
+        <td><a href="docs/init.md">系统初始化</a></td>
+        <td><a href="docs/ca.md">CA证书制作</a></td>
+        <td><a href="docs/etcd-install.md">ETCD集群部署</a></td>
+        <td><a href="docs/master.md">Master节点部署</a></td>
+        <td><a href="docs/flannel.md">Flannel网络部署</a></td>
+        <td><a href="docs/app.md">创建第一个K8S应用</a></td>
+    </tr>
+    <tr>
+        <td><strong>必备插件</strong></td>
+        <td><a href="docs/dashboard.md">Dashboard部署</a></td>
+        <td><a href="docs/coredns.md">CoreDNS部署</a></td>
+    </tr>
+</table>
+
+# 使用手册
 ## 0.系统初始化
 1. 设置主机名！！！
 2. 设置/etc/hosts保证主机名能够解析
@@ -226,11 +244,3 @@ linux-node4:
 
 # 手动部署
 
-- [系统初始化](docs/init.md)
-- [CA证书制作](docs/ca.md)
-- [ETCD集群部署](docs/etcd-install.md)
-- [Master节点部署](docs/master.md)
-- [Node节点部署](docs/node.md)
-- [Flannel网络部署](docs/flannel.md)
-- [创建第一个K8S应用](docs/app.md)
-- [CoreDNS和Dashboard部署](docs/dashboard.md)
