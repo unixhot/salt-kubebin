@@ -39,7 +39,6 @@
 ## 2.安装Salt-SSH并克隆本项目代码。
 
 2.1 安装Salt SSH（注意：老版本的Salt SSH不支持Roster定义Grains，需要2017.7.4以上版本）
-
 ```
 [root@linux-node1 ~]# yum install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm 
 [root@linux-node1 ~]# yum install -y salt-ssh git
@@ -61,14 +60,14 @@ Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9l
 
 ```
 [root@linux-node1 ~]# cd /srv/salt/k8s/
-[root@linux-node1 k8s]# unzip k8s-v1.9.3.zip 
+[root@linux-node1 k8s]# unzip k8s-v1.10.3-auto.zip 
 [root@linux-node1 k8s]# ls -l files/
 total 0
 drwxr-xr-x 2 root root  94 Mar 28 00:33 cfssl-1.2
 drwxrwxr-x 2 root root 195 Mar 27 23:15 cni-plugins-amd64-v0.7.0
 drwxr-xr-x 2 root root  33 Mar 28 00:33 etcd-v3.3.1-linux-amd64
 drwxr-xr-x 2 root root  47 Mar 28 12:05 flannel-v0.10.0-linux-amd64
-drwxr-xr-x 3 root root  17 Mar 28 00:47 k8s-v1.9.3
+drwxr-xr-x 3 root root  17 Mar 28 00:47 k8s-v1.10.3
 ```
 
 ## 3.Salt SSH管理的机器以及角色分配
@@ -163,8 +162,9 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 ```
 由于包比较大，这里执行时间较长，5分钟+，如果执行有失败可以再次执行即可！
 
-## 6.测试Kubernetes安装（请新打开一个窗口，保证环境变量生效！）
+## 6.测试Kubernetes安装
 ```
+[root@linux-node1 ~]# source /etc/profile
 [root@k8s-node1 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
 scheduler            Healthy   ok                  
@@ -172,10 +172,10 @@ controller-manager   Healthy   ok
 etcd-0               Healthy   {"health":"true"}   
 etcd-2               Healthy   {"health":"true"}   
 etcd-1               Healthy   {"health":"true"}   
-[root@k8s-node1 ~]# kubectl get node
+[root@linux-node1 ~]# kubectl get node
 NAME            STATUS    ROLES     AGE       VERSION
-192.168.56.21   Ready     <none>    1m        v1.9.3
-192.168.56.22   Ready     <none>    1m        v1.9.3
+192.168.56.12   Ready     <none>    1m        v1.10.3
+192.168.56.13   Ready     <none>    1m        v1.10.3
 ```
 ## 7.测试Kubernetes集群和Flannel网络
 ```
@@ -184,24 +184,26 @@ deployment "net-test" created
 需要等待拉取镜像，可能稍有的慢，请等待。
 [root@linux-node1 ~]# kubectl get pod -o wide
 NAME                        READY     STATUS    RESTARTS   AGE       IP          NODE
-net-test-74f45db489-9hr74   1/1       Running   0          48s       10.2.43.2   192.168.56.22
-net-test-74f45db489-rkfjs   1/1       Running   0          48s       10.2.59.2   192.168.56.21
+net-test-5767cb94df-n9lvk   1/1       Running   0          14s       10.2.12.2   192.168.56.13
+net-test-5767cb94df-zclc5   1/1       Running   0          14s       10.2.24.2   192.168.56.12
 
-测试联通性
-[root@linux-node1 ~]# ping -c 1 10.2.43.2
-PING 10.2.43.2 (10.2.43.2) 56(84) bytes of data.
-64 bytes from 10.2.43.2: icmp_seq=1 ttl=61 time=3.11 ms
+测试联通性，如果都能ping通，说明Kubernetes集群部署完毕，有问题请QQ群交流。
+[root@linux-node1 ~]# ping -c 1 10.2.12.2
+PING 10.2.12.2 (10.2.12.2) 56(84) bytes of data.
+64 bytes from 10.2.12.2: icmp_seq=1 ttl=61 time=8.72 ms
 
---- 10.2.43.2 ping statistics ---
+--- 10.2.12.2 ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 3.114/3.114/3.114/0.000 ms
-[root@linux-node1 ~]# ping -c 1 10.2.59.2
-PING 10.2.59.2 (10.2.59.2) 56(84) bytes of data.
-64 bytes from 10.2.59.2: icmp_seq=1 ttl=61 time=1.23 ms
+rtt min/avg/max/mdev = 8.729/8.729/8.729/0.000 ms
 
---- 10.2.59.2 ping statistics ---
+[root@linux-node1 ~]# ping -c 1 10.2.24.2
+PING 10.2.24.2 (10.2.24.2) 56(84) bytes of data.
+64 bytes from 10.2.24.2: icmp_seq=1 ttl=61 time=22.9 ms
+
+--- 10.2.24.2 ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 1.230/1.230/1.230/0.000 ms
+rtt min/avg/max/mdev = 22.960/22.960/22.960/0.000 ms
+
 ```
 ## 7.如何新增Kubernetes节点
 
