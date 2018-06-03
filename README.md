@@ -31,13 +31,13 @@
         <td><a href="docs/etcd-install.md">3.ETCD集群部署</a></td>
         <td><a href="docs/master.md">4.Master节点部署</a></td>
         <td><a href="docs/node.md">5.Node节点部署</a></td>
-        <td><a href="docs/flannel.md">6.Flannel网络部署</a></td>
-        <td><a href="docs/app.md">7.创建第一个K8S应用</a></td>
+        <td><a href="docs/flannel.md">6.Flannel部署</a></td>
+        <td><a href="docs/app.md">7.应用创建</a></td>
     </tr>
     <tr>
         <td><strong>必备插件</strong></td>
-        <td><a href="docs/dashboard.md">Dashboard部署</a></td>
-        <td><a href="docs/coredns.md">CoreDNS部署</a></td>
+        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
+        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
     </tr>
 </table>
 
