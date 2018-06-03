@@ -26,12 +26,13 @@
 <table border="0">
     <tr>
         <td><strong>手动部署</strong></td>
-        <td><a href="docs/init.md">系统初始化</a></td>
-        <td><a href="docs/ca.md">CA证书制作</a></td>
-        <td><a href="docs/etcd-install.md">ETCD集群部署</a></td>
-        <td><a href="docs/master.md">Master节点部署</a></td>
-        <td><a href="docs/flannel.md">Flannel网络部署</a></td>
-        <td><a href="docs/app.md">创建第一个K8S应用</a></td>
+        <td><a href="docs/init.md">1.系统初始化</a></td>
+        <td><a href="docs/ca.md">2.CA证书制作</a></td>
+        <td><a href="docs/etcd-install.md">3.ETCD集群部署</a></td>
+        <td><a href="docs/master.md">4.Master节点部署</a></td>
+        <td><a href="docs/node.md">5.Node节点部署</a></td>
+        <td><a href="docs/flannel.md">6.Flannel网络部署</a></td>
+        <td><a href="docs/app.md">7.创建第一个K8S应用</a></td>
     </tr>
     <tr>
         <td><strong>必备插件</strong></td>
