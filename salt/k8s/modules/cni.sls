@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+#******************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  CNI For Kubernetes
+#******************************************
+{% set cni_version = "cni-plugins-amd64-v0.7.0" %}
+
 cni-dir:
   file.directory:
     - name: /etc/cni
@@ -20,7 +29,7 @@ cni-default-conf:
 cni-bin:
   file.recurse:
     - name: /opt/kubernetes/bin/cni
-    - source: salt://k8s/files/cni-plugins-amd64-v0.7.0/
+    - source: salt://k8s/files/{{ cni_version }}/
     - user: root
     - group: root
     - file_mode: 755

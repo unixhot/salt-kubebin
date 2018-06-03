@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+#******************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  Kubernetes Node kubelet
+#******************************************
+
+{% set k8s_version = "k8s-v1.10.3" %}
+
 include:
   - k8s.modules.cni
   - k8s.modules.base-dir
@@ -31,7 +41,7 @@ kubeconfig-use-context:
 kubelet-bin:
   file.managed:
     - name: /opt/kubernetes/bin/kubelet
-    - source: salt://k8s/files/k8s-v1.9.3/bin/kubelet
+    - source: salt://k8s/files/{{ k8s_version }}/bin/kubelet
     - user: root
     - group: root
     - mode: 755

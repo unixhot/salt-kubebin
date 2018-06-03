@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+#******************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  Kubernetes API Server
+#******************************************
+
+{% set k8s_version = "k8s-v1.10.3" %}
+
 kubernetes-csr-json:
   file.managed:
     - name: /opt/kubernetes/ssl/kubernetes-csr.json
@@ -35,7 +45,7 @@ basic-auth:
 kube-apiserver-bin:
   file.managed:
     - name: /opt/kubernetes/bin/kube-apiserver
-    - source: salt://k8s/files/k8s-v1.9.3/bin/kube-apiserver
+    - source: salt://k8s/files/{{ k8s_version }}/bin/kube-apiserver
     - user: root
     - group: root
     - mode: 755
