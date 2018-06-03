@@ -42,10 +42,11 @@
 
 ## 2.安装Salt-SSH并克隆本项目代码。
 
-2.1 安装Salt SSH
+2.1 安装Salt SSH（注意：老版本的Salt SSH不支持Roster定义Grains，需要2017.7.4以上版本）
+
 ```
 [root@linux-node1 ~]# yum install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm 
-[root@linux-node1 ~]# yum install -y salt-ssh
+[root@linux-node1 ~]# yum install -y salt-ssh git
 ```
 
 2.2 获取本项目代码，并放置在/srv目录
