@@ -1,6 +1,3 @@
-# 微职位：自动化运维工程师
-[https://ke.qq.com/course/291631](https://ke.qq.com/course/291631)
-
 # SaltStack自动化部署Kubernetes
 - SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 授权、Flannel网络、ETCD集群、Kuber-Proxy使用LVS等）。
 - 手动部署步骤请看最下面的文档（目前已更新至v.1.10.1）。
