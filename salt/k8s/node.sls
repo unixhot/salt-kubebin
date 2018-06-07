@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+#******************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  Kubernetes Node
+#******************************************
+
 include:
   - k8s.modules.flannel
   - k8s.modules.docker

@@ -1,27 +1,21 @@
-# 微职位：自动化运维工程师
-[https://ke.qq.com/course/291631](https://ke.qq.com/course/291631)
-
 # SaltStack自动化部署Kubernetes
-- SaltStack自动化部署Kubernetes v1.9.3版本（支持TLS 双向认证、RBAC 授权、Flannel网络、ETCD集群、Kuber-Proxy使用LVS等）。
-- 手动部署步骤请看最下面的文档（目前已更新至v.1.10.1）。
+- SaltStack自动化部署Kubernetes v1.10.3版本（支持TLS双向认证、RBAC授权、Flannel网络、ETCD集群、Kuber-Proxy使用LVS等）。
 
-## 版本明细：Release-v1.0
-
+## 版本明细：Release-v1.10.3
 - 测试通过系统：CentOS 7.4
-- salt-ssh: 2017.7.4
-- Kubernetes： v1.9.3
-- Etcd: v3.3.1
-- Docker: 17.12.1-ce
-- Flannel： v0.10.0
+- salt-ssh:     2017.7.4
+- Kubernetes：  v1.10.3
+- Etcd:         v3.3.1
+- Docker:       17.12.1-ce
+- Flannel：     v0.10.0
 - CNI-Plugins： v0.7.0
 建议部署节点：最少三个节点，请配置好主机名解析（必备）
 
 ## 架构介绍
-
 1. 使用Salt Grains进行角色定义，增加灵活性。
 2. 使用Salt Pillar进行配置项管理，保证安全性。
 3. 使用Salt SSH执行状态，不需要安装Agent，保证通用性。
-4. 使用Kubernetes当前稳定版本v1.9.3，保证稳定性。
+4. 使用Kubernetes当前稳定版本v1.10.3，保证稳定性。
 
 ## 技术交流QQ群（加群请备注来源于Github）：
 - 自动化运维工程师：439084446
@@ -29,8 +23,26 @@
 - 运维开发工程师：399033250
 
 # 使用手册
-## 0.系统初始化
+<table border="0">
+    <tr>
+        <td><strong>手动部署</strong></td>
+        <td><a href="docs/init.md">1.系统初始化</a></td>
+        <td><a href="docs/ca.md">2.CA证书制作</a></td>
+        <td><a href="docs/etcd-install.md">3.ETCD集群部署</a></td>
+        <td><a href="docs/master.md">4.Master节点部署</a></td>
+        <td><a href="docs/node.md">5.Node节点部署</a></td>
+        <td><a href="docs/flannel.md">6.Flannel部署</a></td>
+        <td><a href="docs/app.md">7.应用创建</a></td>
+    </tr>
+    <tr>
+        <td><strong>必备插件</strong></td>
+        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
+        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+    </tr>
+</table>
 
+
+## 0.系统初始化
 1. 设置主机名！！！
 2. 设置/etc/hosts保证主机名能够解析
 3. 关闭SELinux和防火墙
@@ -45,10 +57,10 @@
 
 ## 2.安装Salt-SSH并克隆本项目代码。
 
-2.1 安装Salt SSH
+2.1 安装Salt SSH（注意：老版本的Salt SSH不支持Roster定义Grains，需要2017.7.4以上版本）
 ```
 [root@linux-node1 ~]# yum install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm 
-[root@linux-node1 ~]# yum install -y salt-ssh
+[root@linux-node1 ~]# yum install -y salt-ssh git
 ```
 
 2.2 获取本项目代码，并放置在/srv目录
@@ -67,14 +79,14 @@ Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9l
 
 ```
 [root@linux-node1 ~]# cd /srv/salt/k8s/
-[root@linux-node1 k8s]# unzip k8s-v1.9.3.zip 
+[root@linux-node1 k8s]# unzip k8s-v1.10.3-auto.zip 
 [root@linux-node1 k8s]# ls -l files/
 total 0
 drwxr-xr-x 2 root root  94 Mar 28 00:33 cfssl-1.2
 drwxrwxr-x 2 root root 195 Mar 27 23:15 cni-plugins-amd64-v0.7.0
 drwxr-xr-x 2 root root  33 Mar 28 00:33 etcd-v3.3.1-linux-amd64
 drwxr-xr-x 2 root root  47 Mar 28 12:05 flannel-v0.10.0-linux-amd64
-drwxr-xr-x 3 root root  17 Mar 28 00:47 k8s-v1.9.3
+drwxr-xr-x 3 root root  17 Mar 28 00:47 k8s-v1.10.3
 ```
 
 ## 3.Salt SSH管理的机器以及角色分配
@@ -86,7 +98,7 @@ drwxr-xr-x 3 root root  17 Mar 28 00:47 k8s-v1.9.3
 ```
 [root@linux-node1 ~]# vim /etc/salt/roster 
 linux-node1:
-  host: 192.168.56.20
+  host: 192.168.56.11
   user: root
   priv: /root/.ssh/id_rsa
   minion_opts:
@@ -96,7 +108,7 @@ linux-node1:
       etcd-name: etcd-node1
 
 linux-node2:
-  host: 192.168.56.21
+  host: 192.168.56.12
   user: root
   priv: /root/.ssh/id_rsa
   minion_opts:
@@ -106,7 +118,7 @@ linux-node2:
       etcd-name: etcd-node2
 
 linux-node3:
-  host: 192.168.56.22
+  host: 192.168.56.13
   user: root
   priv: /root/.ssh/id_rsa
   minion_opts:
@@ -120,13 +132,13 @@ linux-node3:
 ```
 [root@linux-node1 ~]# vim /srv/pillar/k8s.sls
 #设置Master的IP地址(必须修改)
-MASTER_IP: "192.168.56.20"
+MASTER_IP: "192.168.56.11"
 
 #设置ETCD集群访问地址（必须修改）
-ETCD_ENDPOINTS: "https://192.168.56.20:2379,https://192.168.56.21:2379,https://192.168.56.22:2379"
+ETCD_ENDPOINTS: "https://192.168.56.11:2379,https://192.168.56.12:2379,https://192.168.56.13:2379"
 
 #设置ETCD集群初始化列表（必须修改）
-ETCD_CLUSTER: "etcd-node1=https://192.168.56.20:2380,etcd-node2=https://192.168.56.21:2380,etcd-node3=https://192.168.56.22:2380"
+ETCD_CLUSTER: "etcd-node1=https://192.168.56.11:2380,etcd-node2=https://192.168.56.12:2380,etcd-node3=https://192.168.56.13:2380"
 
 #通过Grains FQDN自动获取本机IP地址，请注意保证主机名解析到本机IP地址
 NODE_IP: {{ grains['fqdn_ip4'][0] }}
@@ -169,8 +181,9 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 ```
 由于包比较大，这里执行时间较长，5分钟+，如果执行有失败可以再次执行即可！
 
-## 6.测试Kubernetes安装（请新打开一个窗口，保证环境变量生效！）
+## 6.测试Kubernetes安装
 ```
+[root@linux-node1 ~]# source /etc/profile
 [root@k8s-node1 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
 scheduler            Healthy   ok                  
@@ -178,10 +191,10 @@ controller-manager   Healthy   ok
 etcd-0               Healthy   {"health":"true"}   
 etcd-2               Healthy   {"health":"true"}   
 etcd-1               Healthy   {"health":"true"}   
-[root@k8s-node1 ~]# kubectl get node
+[root@linux-node1 ~]# kubectl get node
 NAME            STATUS    ROLES     AGE       VERSION
-192.168.56.21   Ready     <none>    1m        v1.9.3
-192.168.56.22   Ready     <none>    1m        v1.9.3
+192.168.56.12   Ready     <none>    1m        v1.10.3
+192.168.56.13   Ready     <none>    1m        v1.10.3
 ```
 ## 7.测试Kubernetes集群和Flannel网络
 ```
@@ -190,24 +203,26 @@ deployment "net-test" created
 需要等待拉取镜像，可能稍有的慢，请等待。
 [root@linux-node1 ~]# kubectl get pod -o wide
 NAME                        READY     STATUS    RESTARTS   AGE       IP          NODE
-net-test-74f45db489-9hr74   1/1       Running   0          48s       10.2.43.2   192.168.56.22
-net-test-74f45db489-rkfjs   1/1       Running   0          48s       10.2.59.2   192.168.56.21
+net-test-5767cb94df-n9lvk   1/1       Running   0          14s       10.2.12.2   192.168.56.13
+net-test-5767cb94df-zclc5   1/1       Running   0          14s       10.2.24.2   192.168.56.12
 
-测试联通性
-[root@linux-node1 ~]# ping -c 1 10.2.43.2
-PING 10.2.43.2 (10.2.43.2) 56(84) bytes of data.
-64 bytes from 10.2.43.2: icmp_seq=1 ttl=61 time=3.11 ms
+测试联通性，如果都能ping通，说明Kubernetes集群部署完毕，有问题请QQ群交流。
+[root@linux-node1 ~]# ping -c 1 10.2.12.2
+PING 10.2.12.2 (10.2.12.2) 56(84) bytes of data.
+64 bytes from 10.2.12.2: icmp_seq=1 ttl=61 time=8.72 ms
 
---- 10.2.43.2 ping statistics ---
+--- 10.2.12.2 ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 3.114/3.114/3.114/0.000 ms
-[root@linux-node1 ~]# ping -c 1 10.2.59.2
-PING 10.2.59.2 (10.2.59.2) 56(84) bytes of data.
-64 bytes from 10.2.59.2: icmp_seq=1 ttl=61 time=1.23 ms
+rtt min/avg/max/mdev = 8.729/8.729/8.729/0.000 ms
 
---- 10.2.59.2 ping statistics ---
+[root@linux-node1 ~]# ping -c 1 10.2.24.2
+PING 10.2.24.2 (10.2.24.2) 56(84) bytes of data.
+64 bytes from 10.2.24.2: icmp_seq=1 ttl=61 time=22.9 ms
+
+--- 10.2.24.2 ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 1.230/1.230/1.230/0.000 ms
+rtt min/avg/max/mdev = 22.960/22.960/22.960/0.000 ms
+
 ```
 ## 7.如何新增Kubernetes节点
 
@@ -217,7 +232,7 @@ rtt min/avg/max/mdev = 1.230/1.230/1.230/0.000 ms
 ```
 [root@linux-node1 ~]# vim /etc/salt/roster 
 linux-node4:
-  host: 192.168.56.23
+  host: 192.168.56.14
   user: root
   priv: /root/.ssh/id_rsa
   minion_opts:
@@ -229,7 +244,6 @@ linux-node4:
 注意：不要相信自己，要相信电脑！！！
 
 # 手动部署
-
 - [系统初始化](docs/init.md)
 - [CA证书制作](docs/ca.md)
 - [ETCD集群部署](docs/etcd-install.md)
@@ -238,3 +252,4 @@ linux-node4:
 - [Flannel网络部署](docs/flannel.md)
 - [创建第一个K8S应用](docs/app.md)
 - [CoreDNS和Dashboard部署](docs/dashboard.md)
+

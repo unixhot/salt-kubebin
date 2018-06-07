@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+#******************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  ETCD Cluster
+#******************************************
+{% set etcd_version = "etcd-v3.3.1-linux-amd64" %}
+
 include:
   - k8s.modules.base-dir
   - k8s.modules.cfssl
@@ -6,7 +15,7 @@ include:
 etcd-bin:
   file.managed:
     - name: /opt/kubernetes/bin/etcd
-    - source: salt://k8s/files/etcd-v3.3.1-linux-amd64/etcd
+    - source: salt://k8s/files/{{ etcd_version }}/etcd
     - user: root
     - group: root
     - mode: 755
@@ -14,7 +23,7 @@ etcd-bin:
 etcdctl-bin:
   file.managed:
     - name: /opt/kubernetes/bin/etcdctl
-    - source: salt://k8s/files/etcd-v3.3.1-linux-amd64/etcdctl
+    - source: salt://k8s/files/{{ etcd_version }}/etcdctl
     - user: root
     - group: root
     - mode: 755

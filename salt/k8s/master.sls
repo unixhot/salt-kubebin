@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+#******************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  Kubernetes Master
+#******************************************
 include:
   - k8s.modules.ca-file
   - k8s.modules.cfssl

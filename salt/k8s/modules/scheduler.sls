@@ -1,7 +1,17 @@
+# -*- coding: utf-8 -*-
+#******************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  Kubernetes Scheduler
+#******************************************
+
+{% set k8s_version = "k8s-v1.10.3" %}
+
 kube-scheduler-bin:
   file.managed:
     - name: /opt/kubernetes/bin/kube-scheduler
-    - source: salt://k8s/files/k8s-v1.9.3/bin/kube-scheduler
+    - source: salt://k8s/files/{{ k8s_version }}/bin/kube-scheduler
     - user: root
     - group: root
     - mode: 755
