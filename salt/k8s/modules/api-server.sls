@@ -63,6 +63,11 @@ kube-apiserver-service:
         SERVICE_CIDR: {{ pillar['SERVICE_CIDR'] }}
         NODE_PORT_RANGE: {{ pillar['NODE_PORT_RANGE'] }}
         ETCD_ENDPOINTS: {{ pillar['ETCD_ENDPOINTS'] }}
+  pkg.installed:
+    - names:
+      - ipvsadm
+      - ipset
+      - conntrack
   cmd.run:
     - name: systemctl daemon-reload
   service.running:
