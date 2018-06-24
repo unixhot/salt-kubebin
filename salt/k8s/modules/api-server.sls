@@ -67,7 +67,7 @@ kube-apiserver-service:
     - names:
       - ipvsadm
       - ipset
-      - conntrack
+      - conntrack-tools
   cmd.run:
     - name: systemctl daemon-reload
   service.running:

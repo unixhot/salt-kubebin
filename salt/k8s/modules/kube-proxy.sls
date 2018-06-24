@@ -69,7 +69,7 @@ kube-proxy-service:
     - names:
       - ipvsadm
       - ipset 
-      - conntrack
+      - conntrack-tools
   service.running:
     - name: kube-proxy
     - enable: True
