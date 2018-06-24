@@ -38,6 +38,7 @@
         <td><strong>必备插件</strong></td>
         <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
         <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+        <td><a href="docs/heapster.md">3.Heapster部署</a></td>
     </tr>
 </table>
 
