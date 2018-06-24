@@ -59,21 +59,22 @@
 
 2.1 安装Salt SSH（注意：老版本的Salt SSH不支持Roster定义Grains，需要2017.7.4以上版本）
 ```
-[root@linux-node1 ~]# yum install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm 
+[root@linux-node1 ~]# yum install https://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
+[root@linux-node1 ~]# yum install https://mirrors.aliyun.com/saltstack/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
+[root@linux-node1 ~]# sed -i "s/repo.saltstack.com/mirrors.aliyun.com\/saltstack/g" /etc/yum.repos.d/salt-latest.repo
 [root@linux-node1 ~]# yum install -y salt-ssh git
 ```
 
 2.2 获取本项目代码，并放置在/srv目录
 ```
 [root@linux-node1 ~]# git clone https://github.com/unixhot/salt-kubernetes.git
-[root@linux-node1 srv]# cd salt-kubernetes/
-[root@linux-node1 srv]# mv * /srv/
-[root@linux-node1 srv]# cd /srv/
-[root@linux-node1 srv]# cp roster /etc/salt/roster
-[root@linux-node1 srv]# cp master /etc/salt/master
+[root@linux-node1 ~]# cd salt-kubernetes/
+[root@linux-node1 ~]# mv * /srv/
+[root@linux-node1 srv]# /bin/cp /srv/roster /etc/salt/roster
+[root@linux-node1 srv]# /bin/cp /srv/master /etc/salt/master
 ```
 
-2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载。
+2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载,下载k8s-v1.10.3-auto.zip。
 下载完成后，将文件移动到/srv/salt/k8s/目录下，并解压
 Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw
 
@@ -82,11 +83,11 @@ Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9l
 [root@linux-node1 k8s]# unzip k8s-v1.10.3-auto.zip 
 [root@linux-node1 k8s]# ls -l files/
 total 0
-drwxr-xr-x 2 root root  94 Mar 28 00:33 cfssl-1.2
-drwxrwxr-x 2 root root 195 Mar 27 23:15 cni-plugins-amd64-v0.7.0
-drwxr-xr-x 2 root root  33 Mar 28 00:33 etcd-v3.3.1-linux-amd64
-drwxr-xr-x 2 root root  47 Mar 28 12:05 flannel-v0.10.0-linux-amd64
-drwxr-xr-x 3 root root  17 Mar 28 00:47 k8s-v1.10.3
+drwxr-xr-x. 2 root root  94 Jun  3 19:12 cfssl-1.2
+drwxr-xr-x. 2 root root 195 Jun  3 19:12 cni-plugins-amd64-v0.7.0
+drwxr-xr-x. 2 root root  33 Jun  3 19:12 etcd-v3.3.1-linux-amd64
+drwxr-xr-x. 2 root root  47 Jun  3 19:12 flannel-v0.10.0-linux-amd64
+drwxr-xr-x. 3 root root  17 Jun  3 19:12 k8s-v1.10.3
 ```
 
 ## 3.Salt SSH管理的机器以及角色分配
@@ -184,7 +185,7 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 ## 6.测试Kubernetes安装
 ```
 [root@linux-node1 ~]# source /etc/profile
-[root@k8s-node1 ~]# kubectl get cs
+[root@linux-node1 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
 scheduler            Healthy   ok                  
 controller-manager   Healthy   ok                  
