@@ -12,7 +12,7 @@ coredns-77c989547b-kncd5                1/1       Running   0          6m
 
 ## 创建Dashboard
 ```
-[root@linux-node1 ~]# kubectl create -f dashboard/
+[root@linux-node1 ~]# [root@linux-node1 ~]# kubectl create -f /srv/addons/dashboard/
 [root@linux-node1 ~]# kubectl cluster-info
 Kubernetes master is running at https://192.168.56.11:6443
 kubernetes-dashboard is running at https://192.168.56.11:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
@@ -20,7 +20,12 @@ kubernetes-dashboard is running at https://192.168.56.11:6443/api/v1/namespaces/
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
 ```
+## 访问Dashboard
 
+https://192.168.56.11:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
+选择令牌模式登录。
+
+### 获取Token
 ```
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
 ```
