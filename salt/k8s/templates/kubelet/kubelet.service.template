@@ -23,7 +23,6 @@ ExecStart=/opt/kubernetes/bin/kubelet \
   --fail-swap-on=false \
   --logtostderr=true \
   --v=2 \
-  --logtostderr=false \
   --log-dir=/opt/kubernetes/log
 Restart=on-failure
 RestartSec=5
