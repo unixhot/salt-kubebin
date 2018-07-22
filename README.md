@@ -18,9 +18,7 @@
 4. 使用Kubernetes当前稳定版本v1.10.3，保证稳定性。
 
 ## 技术交流QQ群（加群请备注来源于Github）：
-- 自动化运维工程师：439084446
 - 云计算与容器架构师：252370310
-- 运维开发工程师：399033250
 
 # 使用手册
 <table border="0">
@@ -43,7 +41,10 @@
     </tr>
 </table>
 
+## 案例架构图
 
+  ![架构图](https://github.com/unixhot/salt-kubernetes/blob/master/docs/k8S.png)
+  
 ## 0.系统初始化
 1. 设置主机名！！！
 2. 设置/etc/hosts保证主机名能够解析
