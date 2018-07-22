@@ -43,7 +43,7 @@
 
 ## 案例架构图
 
-  ![架构图](https://github.com/unixhot/salt-kubernetes/blob/master/docs/k8S.png)
+  ![架构图](https://github.com/unixhot/salt-kubernetes/blob/master/docs/K8S.png)
   
 ## 0.系统初始化
 1. 设置主机名！！！
