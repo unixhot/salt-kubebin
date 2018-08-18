@@ -15,7 +15,6 @@ ExecStart=/opt/kubernetes/bin/kube-proxy \
   --ipvs-min-sync-period=5s \
   --ipvs-sync-period=5s \
   --ipvs-scheduler=rr \
-  --logtostderr=true \
   --v=2 \
   --logtostderr=false \
   --log-dir=/opt/kubernetes/log
