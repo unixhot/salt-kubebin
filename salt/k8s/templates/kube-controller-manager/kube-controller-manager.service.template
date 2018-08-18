@@ -4,7 +4,7 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 
 [Service]
 ExecStart=/opt/kubernetes/bin/kube-controller-manager \
-  --horizontal-pod-autoscaler-use-rest-clients=true
+  --horizontal-pod-autoscaler-use-rest-clients=true \
   --address=127.0.0.1 \
   --master=http://127.0.0.1:8080 \
   --allocate-node-cidrs=true \
