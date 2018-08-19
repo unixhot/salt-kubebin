@@ -38,6 +38,7 @@
         <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
         <td><a href="docs/heapster.md">3.Heapster部署</a></td>
         <td><a href="docs/ingress.md">4.Ingress部署</a></td>
+        <td><a href="https://github.com/unixhot/devops-x">5.CI/CD</a></td>
     </tr>
 </table>
 
@@ -255,6 +256,7 @@ linux-node4:
         <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
         <td><a href="docs/heapster.md">3.Heapster部署</a></td>
         <td><a href="docs/ingress.md">4.Ingress部署</a></td>
+        <td><a href="https://github.com/unixhot/devops-x">5.CI/CD</a></td>
     </tr>
 </table>
 
