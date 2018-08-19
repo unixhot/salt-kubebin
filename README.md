@@ -228,7 +228,7 @@ PING 10.2.24.2 (10.2.24.2) 56(84) bytes of data.
 rtt min/avg/max/mdev = 22.960/22.960/22.960/0.000 ms
 
 ```
-## 7.如何新增Kubernetes节点
+## 8.如何新增Kubernetes节点
 
 - 1.设置SSH无密码登录
 - 2.在/etc/salt/roster里面，增加对应的机器
@@ -244,6 +244,20 @@ linux-node4:
       k8s-role: node
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
+
+## 9.下一步要做什么？
+
+你可以安装Kubernetes必备的插件
+<table border="0">
+    <tr>
+        <td><strong>必备插件</strong></td>
+        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
+        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+        <td><a href="docs/heapster.md">3.Heapster部署</a></td>
+        <td><a href="docs/ingress.md">4.Ingress部署</a></td>
+    </tr>
+</table>
+
 
 注意：不要相信自己，要相信电脑！！！
 
