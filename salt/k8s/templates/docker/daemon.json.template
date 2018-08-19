@@ -1,0 +1,4 @@
+{
+	  "registry-mirrors": ["https://tdimi5q1.mirror.aliyuncs.com"],
+  	  "insecure-registries" : ["registry.devopsedu.com:5000", "192.168.56.11:5000"]
+}
