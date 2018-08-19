@@ -31,3 +31,9 @@ path-env:
     - name: /etc/profile
     - text:
       - export PATH=$PATH:/opt/kubernetes/bin
+
+init-pkg:
+  pkg.installed:
+    - names:
+      - nfs-utils
+      - socat
