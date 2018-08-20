@@ -26,6 +26,10 @@ docker-config:
     - group: root
     - mode: 644
 
+docker-config-dir:
+  file.directory:
+    - name: /etc/docker
+    
 docker-daemon-config:
   file.managed:
     - name: /etc/docker/daemon.json
