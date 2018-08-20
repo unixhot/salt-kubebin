@@ -184,7 +184,7 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 5.2 部署K8S集群
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
-由于包比较大，这里执行时间较长，5分钟+，如果执行有失败可以再次执行即可！
+由于包比较大，这里执行时间较长，5分钟+，喝杯咖啡休息一下，如果执行有失败可以再次执行即可！
 
 ## 6.测试Kubernetes安装
 ```
