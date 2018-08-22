@@ -263,7 +263,7 @@ linux-node4:
 ### 培训教学
 
 - 目前DevOps学院已经上线《基于Kubernetes构建企业容器云》的【入门实战篇】和【进阶提高篇】
--【DevOps学院】 http://www.devopsedu.com/
+- 【DevOps学院】 http://www.devopsedu.com/
 
 注意：不要相信自己，要相信电脑！！！
 
