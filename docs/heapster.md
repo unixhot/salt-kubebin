@@ -8,3 +8,5 @@
 ```
 
 ### 登录Dashboard查看
+
+ 登录Dashboard即可查看到对应的监控图表。
