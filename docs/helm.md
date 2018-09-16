@@ -14,7 +14,7 @@
 ```
 
 3.所有节点安装socat命令
-``
+```
 [root@linux-node1 ~]# yum install -y socat
 ```
 
