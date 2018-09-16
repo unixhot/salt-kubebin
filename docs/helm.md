@@ -32,19 +32,20 @@ kube-system   tiller-deploy-744cfb67cf-pws4d                1/1       Running   
 ```
 
 6.使用Helm部署第一个应用
- 6.1创建服务账号
+
+6.1创建服务账号
 ```
 [root@linux-node1 ~]# kubectl create serviceaccount --namespace kube-system tiller
 serviceaccount "tiller" created
 ```
 
- 6.2.创建集群的角色绑定
+6.2.创建集群的角色绑定
 ```
 [root@linux-node1 ~]# kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 clusterrolebinding.rbac.authorization.k8s.io "tiller-cluster-rule" created
 ```
 
-  6.3.为应用程序设置serviceAccount
+ 6.3.为应用程序设置serviceAccount
  ```
 [root@linux-node1 ~]# kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
 deployment.extensions "tiller-deploy" patched
