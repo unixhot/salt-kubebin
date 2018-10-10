@@ -203,6 +203,7 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 
 5.1 部署Etcd，由于Etcd是基础组建，需要先部署，目标为部署etcd的节点。
 [root@linux-node1 ~]# salt-ssh -L 'linux-node1,linux-node2,linux-node3' state.sls k8s.etcd
+注：如果执行失败，请检查各个节点的主机名解析是否正确（监听的IP地址依赖主机名解析），并在此执行上面命令。
 
 5.2 部署K8S集群
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
