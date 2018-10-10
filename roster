@@ -1,5 +1,13 @@
+# -*- coding: utf-8 -*-
+#******************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  Salt SSH Roster
+#******************************************
+
 linux-node1:
-  host: 192.168.56.20
+  host: 192.168.56.11
   user: root
   priv: /root/.ssh/id_rsa
   minion_opts: 
@@ -9,7 +17,7 @@ linux-node1:
       etcd-name: etcd-node1
 
 linux-node2:
-  host: 192.168.56.21
+  host: 192.168.56.12
   user: root
   priv: /root/.ssh/id_rsa
   minion_opts:
@@ -19,7 +27,7 @@ linux-node2:
       etcd-name: etcd-node2
 
 linux-node3:
-  host: 192.168.56.22
+  host: 192.168.56.13
   user: root
   priv: /root/.ssh/id_rsa
   minion_opts:

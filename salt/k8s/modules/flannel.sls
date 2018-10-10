@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+#******************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  Flannel
+#******************************************
+{% set flannel_version = "flannel-v0.10.0-linux-amd64" %}
+
 flannel-key:
   file.managed:
     - name: /opt/kubernetes/ssl/flanneld-csr.json
@@ -20,7 +29,7 @@ remove-docker0:
 mk-docker-opts:
   file.managed:
     - name: /opt/kubernetes/bin/mk-docker-opts.sh
-    - source: salt://k8s/files/flannel-v0.10.0-linux-amd64/mk-docker-opts.sh
+    - source: salt://k8s/files/{{ flannel_version }}/mk-docker-opts.sh
     - user: root
     - group: root
     - mode: 755
@@ -53,7 +62,7 @@ flannel-etcd:
 flannel-bin:
   file.managed:
     - name: /opt/kubernetes/bin/flanneld
-    - source: salt://k8s/files/flannel-v0.10.0-linux-amd64/flanneld
+    - source: salt://k8s/files/{{ flannel_version }}/flanneld
     - user: root
     - group: root
     - mode: 755

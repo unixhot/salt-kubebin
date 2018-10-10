@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+#******************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  Kubernetes kubectl
+#******************************************
+
+{% set k8s_version = "k8s-v1.10.3" %}
+
 kubectl-admin-csr:
   file.managed:
     - name: /opt/kubernetes/ssl/admin-csr.json
@@ -12,7 +22,7 @@ kubectl-admin-csr:
 kubectl-bin:
   file.managed:
     - name: /opt/kubernetes/bin/kubectl
-    - source: salt://k8s/files/k8s-v1.9.3/bin/kubectl
+    - source: salt://k8s/files/{{ k8s_version }}/bin/kubectl
     - user: root
     - group: root
     - mode: 755

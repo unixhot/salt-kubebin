@@ -9,7 +9,12 @@ ExecStart=/opt/kubernetes/bin/kube-proxy \
   --bind-address={{ NODE_IP }} \
   --hostname-override={{ NODE_IP }} \
   --kubeconfig=/opt/kubernetes/cfg/kube-proxy.kubeconfig \
-  --logtostderr=true \
+  --masquerade-all \
+  --feature-gates=SupportIPVSProxyMode=true \
+  --proxy-mode=ipvs \
+  --ipvs-min-sync-period=5s \
+  --ipvs-sync-period=5s \
+  --ipvs-scheduler=rr \
   --v=2 \
   --logtostderr=false \
   --log-dir=/opt/kubernetes/log

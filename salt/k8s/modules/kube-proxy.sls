@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+# #******************************************
+# # Author:       Jason Zhao
+# # Email:        shundong.zhao@linuxhot.com
+# # Organization: http://www.devopsedu.com/
+# # Description:  Kubernetes Proxy
+# #******************************************
+
+{% set k8s_version = "k8s-v1.10.3" %}
+
 include:
   - k8s.modules.cni
   - k8s.modules.base-dir
@@ -38,7 +48,7 @@ kubeproxy-use-context:
 kube-proxy-bin:
   file.managed:
     - name: /opt/kubernetes/bin/kube-proxy
-    - source: salt://k8s/files/k8s-v1.9.3/bin/kube-proxy
+    - source: salt://k8s/files/{{ k8s_version }}/bin/kube-proxy
     - user: root
     - group: root
     - mode: 755
@@ -55,6 +65,11 @@ kube-proxy-service:
         NODE_IP: {{ pillar['NODE_IP'] }}
   cmd.run:
     - name: systemctl daemon-reload
+  pkg.installed:
+    - names:
+      - ipvsadm
+      - ipset 
+      - conntrack-tools
   service.running:
     - name: kube-proxy
     - enable: True

@@ -1,7 +1,16 @@
+# -*- coding: utf-8 -*-
+#********************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  Kubernetes Controller Manager
+#********************************************
+{% set k8s_version = "k8s-v1.10.3" %}
+
 kube-controller-manager-bin:
   file.managed:
     - name: /opt/kubernetes/bin/kube-controller-manager
-    - source: salt://k8s/files/k8s-v1.9.3/bin/kube-controller-manager
+    - source: salt://k8s/files/{{ k8s_version }}/bin/kube-controller-manager
     - user: root
     - group: root
     - mode: 755

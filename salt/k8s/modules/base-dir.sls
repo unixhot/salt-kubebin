@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+#******************************************
+# Author:       Jason Zhao
+# Email:        shundong.zhao@linuxhot.com
+# Organization: http://www.devopsedu.com/
+# Description:  Base Env
+#******************************************
+
 kubernetes-dir:
   file.directory:
     - name: /opt/kubernetes
@@ -23,3 +31,9 @@ path-env:
     - name: /etc/profile
     - text:
       - export PATH=$PATH:/opt/kubernetes/bin
+
+init-pkg:
+  pkg.installed:
+    - names:
+      - nfs-utils
+      - socat
