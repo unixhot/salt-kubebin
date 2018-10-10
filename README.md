@@ -47,9 +47,29 @@
 
   ![架构图](https://github.com/unixhot/salt-kubernetes/blob/master/docs/K8S.png)
   
-## 0.系统初始化
+## 0.系统初始化(必备)
 1. 设置主机名！！！
+```
+[root@linux-node1 ~]# cat /etc/hostname 
+linux-node1.example.com
+
+[root@linux-node2 ~]# cat /etc/hostname 
+linux-node2.example.com
+
+[root@linux-node3 ~]# cat /etc/hostname 
+linux-node3.example.com
+
+```
 2. 设置/etc/hosts保证主机名能够解析
+```
+[root@linux-node1 ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.56.11 linux-node1 linux-node1.example.com
+192.168.56.12 linux-node2 linux-node2.example.com
+192.168.56.13 linux-node3 linux-node3.example.com
+
+```
 3. 关闭SELinux和防火墙
 
 ## 1.设置部署节点到其它所有节点的SSH免密码登录（包括本机）
@@ -67,7 +87,7 @@
 [root@linux-node1 ~]# yum install https://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
 [root@linux-node1 ~]# yum install https://mirrors.aliyun.com/saltstack/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
 [root@linux-node1 ~]# sed -i "s/repo.saltstack.com/mirrors.aliyun.com\/saltstack/g" /etc/yum.repos.d/salt-latest.repo
-[root@linux-node1 ~]# yum install -y salt-ssh git
+[root@linux-node1 ~]# yum install -y salt-ssh git unzip
 ```
 
 2.2 获取本项目代码，并放置在/srv目录
@@ -86,6 +106,7 @@ Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9l
 ```
 [root@linux-node1 ~]# cd /srv/salt/k8s/
 [root@linux-node1 k8s]# unzip k8s-v1.10.3-auto.zip 
+[root@linux-node1 k8s]# rm -f k8s-v1.10.3-auto.zip 
 [root@linux-node1 k8s]# ls -l files/
 total 0
 drwxr-xr-x. 2 root root  94 Jun  3 19:12 cfssl-1.2
@@ -93,6 +114,7 @@ drwxr-xr-x. 2 root root 195 Jun  3 19:12 cni-plugins-amd64-v0.7.0
 drwxr-xr-x. 2 root root  33 Jun  3 19:12 etcd-v3.3.1-linux-amd64
 drwxr-xr-x. 2 root root  47 Jun  3 19:12 flannel-v0.10.0-linux-amd64
 drwxr-xr-x. 3 root root  17 Jun  3 19:12 k8s-v1.10.3
+
 ```
 
 ## 3.Salt SSH管理的机器以及角色分配
