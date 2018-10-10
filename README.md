@@ -211,6 +211,7 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 注：如果执行失败，新手建议推到重来，请检查各个节点的主机名解析是否正确（监听的IP地址依赖主机名解析）。
 
 5.3 部署K8S集群
+```
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
 由于包比较大，这里执行时间较长，5分钟+，喝杯咖啡休息一下，如果执行有失败可以再次执行即可！
@@ -256,7 +257,6 @@ PING 10.2.24.2 (10.2.24.2) 56(84) bytes of data.
 --- 10.2.24.2 ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
 rtt min/avg/max/mdev = 22.960/22.960/22.960/0.000 ms
-
 ```
 ## 8.如何新增Kubernetes节点
 
