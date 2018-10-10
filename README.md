@@ -72,6 +72,8 @@ linux-node3.example.com
 ```
 3. 关闭SELinux和防火墙
 
+4.以上必备条件必须严格检查，否则，一定不会部署成功！
+
 ## 1.设置部署节点到其它所有节点的SSH免密码登录（包括本机）
 ```
 [root@linux-node1 ~]# ssh-keygen -t rsa
@@ -195,17 +197,20 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 ```
 
 ## 5.执行SaltStack状态
-```
-测试Salt SSH联通性
-[root@linux-node1 ~]# salt-ssh '*' test.ping
 
+5.1 测试Salt SSH联通性
+```
+[root@linux-node1 ~]# salt-ssh '*' test.ping
+```
 执行高级状态，会根据定义的角色再对应的机器部署对应的服务
 
-5.1 部署Etcd，由于Etcd是基础组建，需要先部署，目标为部署etcd的节点。
+5.2 部署Etcd，由于Etcd是基础组建，需要先部署，目标为部署etcd的节点。
+```
 [root@linux-node1 ~]# salt-ssh -L 'linux-node1,linux-node2,linux-node3' state.sls k8s.etcd
-注：如果执行失败，请检查各个节点的主机名解析是否正确（监听的IP地址依赖主机名解析），并在此执行上面命令。
+```
+注：如果执行失败，新手建议推到重来，请检查各个节点的主机名解析是否正确（监听的IP地址依赖主机名解析）。
 
-5.2 部署K8S集群
+5.3 部署K8S集群
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
 由于包比较大，这里执行时间较长，5分钟+，喝杯咖啡休息一下，如果执行有失败可以再次执行即可！
