@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.13.12
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          exec:
+            command:
+            - ps aux | grep nginx
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /healthy
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5

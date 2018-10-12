@@ -1,0 +1,30 @@
+
+1.创建deployment
+kubectl create -f nginx-deployment.yaml
+
+2.查看deployment
+kubectl get deployment
+
+3.查看Pod
+kubectl get pod -o wide
+
+4.测试Pod访问
+curl --head 10.2.83.17
+
+5.更新Deployment
+kubectl set image deployment/nginx-deployment nginx=nginx:1.12.2 --record
+
+6.查看更新后的Deployment
+kubectl get deployment -o wide
+
+7.查看更新历史
+kubectl rollout history deployment/nginx-deployment
+
+8.查看具体某一个版本的升级历史
+kubectl rollout history deployment/nginx-deployment --revision=1
+
+9.快速回滚到上一个版本
+kubectl rollout undo deployment/nginx-deployment
+
+10.扩容到5个节点
+ kubectl scale deployment nginx-deployment --replicas 5
