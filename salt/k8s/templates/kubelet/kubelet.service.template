@@ -20,6 +20,7 @@ ExecStart=/opt/kubernetes/bin/kubelet \
   --cluster-domain={{ CLUSTER_DNS_DOMAIN }} \
   --hairpin-mode hairpin-veth \
   --allow-privileged=true \
+  --anonymous-auth=false \
   --fail-swap-on=false \
   --logtostderr=true \
   --v=2 \
