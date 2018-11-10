@@ -272,7 +272,7 @@ linux-node4:
   minion_opts:
     grains:
       k8s-role: node
-[root@linux-node1 ~]# salt-ssh '*' state.highstate
+[root@linux-node1 ~]# salt-ssh 'linux-node4' state.highstate
 ```
 
 ## 9.下一步要做什么？
