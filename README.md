@@ -46,7 +46,7 @@
 ## 案例架构图
 
   ![架构图](https://github.com/unixhot/salt-kubernetes/blob/master/docs/K8S.png)
-  
+
 ## 0.系统初始化(必备)
 1. 设置主机名！！！
 ```
@@ -232,6 +232,7 @@ NAME            STATUS    ROLES     AGE       VERSION
 192.168.56.13   Ready     <none>    1m        v1.10.3
 ```
 ## 7.测试Kubernetes集群和Flannel网络
+
 ```
 [root@linux-node1 ~]# kubectl run net-test --image=alpine --replicas=2 sleep 360000
 deployment "net-test" created
@@ -257,6 +258,12 @@ PING 10.2.24.2 (10.2.24.2) 56(84) bytes of data.
 --- 10.2.24.2 ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
 rtt min/avg/max/mdev = 22.960/22.960/22.960/0.000 ms
+确认服务能够执行 logs exec 等指令;kubectl logs -f net-test-5767cb94df-n9lvk,此时会出现如下报错:
+[root@linux-node1 ~]# kubectl logs net-test-5767cb94df-n9lvk
+error: You must be logged in to the server (the server has asked for the client to provide credentials ( pods/log net-test-5767cb94df-n9lvk))
+由于上述权限问题，我们必需创建一个 apiserver-to-kubelet-rbac.yml 来定义权限，以供我们执行 logs、exec 等指令;
+[root@linux-node1 ~]# kubectl apply -f /srv/addons/apiserver-to-kubelet-rbac.yml
+然后执行kubctl logs验证是否成功.
 ```
 ## 8.如何新增Kubernetes节点
 
