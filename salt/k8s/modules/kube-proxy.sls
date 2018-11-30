@@ -65,6 +65,11 @@ kube-proxy-service:
         NODE_IP: {{ pillar['NODE_IP'] }}
   cmd.run:
     - name: systemctl daemon-reload
+  pkg.installed:
+    - names:
+      - ipvsadm
+      - ipset 
+      - conntrack-tools
   service.running:
     - name: kube-proxy
     - enable: True

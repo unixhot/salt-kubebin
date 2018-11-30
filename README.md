@@ -18,9 +18,7 @@
 4. 使用Kubernetes当前稳定版本v1.10.3，保证稳定性。
 
 ## 技术交流QQ群（加群请备注来源于Github）：
-- 自动化运维工程师：439084446
 - 云计算与容器架构师：252370310
-- 运维开发工程师：399033250
 
 # 使用手册
 <table border="0">
@@ -38,14 +36,43 @@
         <td><strong>必备插件</strong></td>
         <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
         <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+        <td><a href="docs/heapster.md">3.Heapster部署</a></td>
+        <td><a href="docs/ingress.md">4.Ingress部署</a></td>
+        <td><a href="https://github.com/unixhot/devops-x">5.CI/CD</a></td>
+        <td><a href="docs/helm.md">6.Helm部署</a></td>
     </tr>
 </table>
 
+## 案例架构图
 
-## 0.系统初始化
+  ![架构图](https://github.com/unixhot/salt-kubernetes/blob/master/docs/K8S.png)
+  
+## 0.系统初始化(必备)
 1. 设置主机名！！！
+```
+[root@linux-node1 ~]# cat /etc/hostname 
+linux-node1.example.com
+
+[root@linux-node2 ~]# cat /etc/hostname 
+linux-node2.example.com
+
+[root@linux-node3 ~]# cat /etc/hostname 
+linux-node3.example.com
+
+```
 2. 设置/etc/hosts保证主机名能够解析
+```
+[root@linux-node1 ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.56.11 linux-node1 linux-node1.example.com
+192.168.56.12 linux-node2 linux-node2.example.com
+192.168.56.13 linux-node3 linux-node3.example.com
+
+```
 3. 关闭SELinux和防火墙
+
+4.以上必备条件必须严格检查，否则，一定不会部署成功！
 
 ## 1.设置部署节点到其它所有节点的SSH免密码登录（包括本机）
 ```
@@ -59,34 +86,37 @@
 
 2.1 安装Salt SSH（注意：老版本的Salt SSH不支持Roster定义Grains，需要2017.7.4以上版本）
 ```
-[root@linux-node1 ~]# yum install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm 
-[root@linux-node1 ~]# yum install -y salt-ssh git
+[root@linux-node1 ~]# yum install https://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
+[root@linux-node1 ~]# yum install https://mirrors.aliyun.com/saltstack/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
+[root@linux-node1 ~]# sed -i "s/repo.saltstack.com/mirrors.aliyun.com\/saltstack/g" /etc/yum.repos.d/salt-latest.repo
+[root@linux-node1 ~]# yum install -y salt-ssh git unzip
 ```
 
 2.2 获取本项目代码，并放置在/srv目录
 ```
 [root@linux-node1 ~]# git clone https://github.com/unixhot/salt-kubernetes.git
-[root@linux-node1 srv]# cd salt-kubernetes/
-[root@linux-node1 srv]# mv * /srv/
-[root@linux-node1 srv]# cd /srv/
-[root@linux-node1 srv]# cp roster /etc/salt/roster
-[root@linux-node1 srv]# cp master /etc/salt/master
+[root@linux-node1 ~]# cd salt-kubernetes/
+[root@linux-node1 ~]# mv * /srv/
+[root@linux-node1 srv]# /bin/cp /srv/roster /etc/salt/roster
+[root@linux-node1 srv]# /bin/cp /srv/master /etc/salt/master
 ```
 
-2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载。
+2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载,下载k8s-v1.10.3-auto.zip。
 下载完成后，将文件移动到/srv/salt/k8s/目录下，并解压
 Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw
 
 ```
 [root@linux-node1 ~]# cd /srv/salt/k8s/
 [root@linux-node1 k8s]# unzip k8s-v1.10.3-auto.zip 
+[root@linux-node1 k8s]# rm -f k8s-v1.10.3-auto.zip 
 [root@linux-node1 k8s]# ls -l files/
 total 0
-drwxr-xr-x 2 root root  94 Mar 28 00:33 cfssl-1.2
-drwxrwxr-x 2 root root 195 Mar 27 23:15 cni-plugins-amd64-v0.7.0
-drwxr-xr-x 2 root root  33 Mar 28 00:33 etcd-v3.3.1-linux-amd64
-drwxr-xr-x 2 root root  47 Mar 28 12:05 flannel-v0.10.0-linux-amd64
-drwxr-xr-x 3 root root  17 Mar 28 00:47 k8s-v1.10.3
+drwxr-xr-x. 2 root root  94 Jun  3 19:12 cfssl-1.2
+drwxr-xr-x. 2 root root 195 Jun  3 19:12 cni-plugins-amd64-v0.7.0
+drwxr-xr-x. 2 root root  33 Jun  3 19:12 etcd-v3.3.1-linux-amd64
+drwxr-xr-x. 2 root root  47 Jun  3 19:12 flannel-v0.10.0-linux-amd64
+drwxr-xr-x. 3 root root  17 Jun  3 19:12 k8s-v1.10.3
+
 ```
 
 ## 3.Salt SSH管理的机器以及角色分配
@@ -167,24 +197,29 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 ```
 
 ## 5.执行SaltStack状态
-```
-测试Salt SSH联通性
-[root@linux-node1 ~]# salt-ssh '*' test.ping
 
+5.1 测试Salt SSH联通性
+```
+[root@linux-node1 ~]# salt-ssh '*' test.ping
+```
 执行高级状态，会根据定义的角色再对应的机器部署对应的服务
 
-5.1 部署Etcd，由于Etcd是基础组建，需要先部署，目标为部署etcd的节点。
+5.2 部署Etcd，由于Etcd是基础组建，需要先部署，目标为部署etcd的节点。
+```
 [root@linux-node1 ~]# salt-ssh -L 'linux-node1,linux-node2,linux-node3' state.sls k8s.etcd
+```
+注：如果执行失败，新手建议推到重来，请检查各个节点的主机名解析是否正确（监听的IP地址依赖主机名解析）。
 
-5.2 部署K8S集群
+5.3 部署K8S集群
+```
 [root@linux-node1 ~]# salt-ssh '*' state.highstate
 ```
-由于包比较大，这里执行时间较长，5分钟+，如果执行有失败可以再次执行即可！
+由于包比较大，这里执行时间较长，5分钟+，喝杯咖啡休息一下，如果执行有失败可以再次执行即可！
 
 ## 6.测试Kubernetes安装
 ```
 [root@linux-node1 ~]# source /etc/profile
-[root@k8s-node1 ~]# kubectl get cs
+[root@linux-node1 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
 scheduler            Healthy   ok                  
 controller-manager   Healthy   ok                  
@@ -222,9 +257,8 @@ PING 10.2.24.2 (10.2.24.2) 56(84) bytes of data.
 --- 10.2.24.2 ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
 rtt min/avg/max/mdev = 22.960/22.960/22.960/0.000 ms
-
 ```
-## 7.如何新增Kubernetes节点
+## 8.如何新增Kubernetes节点
 
 - 1.设置SSH无密码登录
 - 2.在/etc/salt/roster里面，增加对应的机器
@@ -238,8 +272,27 @@ linux-node4:
   minion_opts:
     grains:
       k8s-role: node
-[root@linux-node1 ~]# salt-ssh '*' state.highstate
+[root@linux-node1 ~]# salt-ssh 'linux-node4' state.highstate
 ```
+
+## 9.下一步要做什么？
+
+你可以安装Kubernetes必备的插件
+<table border="0">
+    <tr>
+        <td><strong>必备插件</strong></td>
+        <td><a href="docs/coredns.md">1.CoreDNS部署</a></td>
+        <td><a href="docs/dashboard.md">2.Dashboard部署</a></td>
+        <td><a href="docs/heapster.md">3.Heapster部署</a></td>
+        <td><a href="docs/ingress.md">4.Ingress部署</a></td>
+        <td><a href="https://github.com/unixhot/devops-x">5.CI/CD</a></td>
+    </tr>
+</table>
+
+### 培训教学
+
+- 目前DevOps学院已经上线《基于Kubernetes构建企业容器云》的【入门实战篇】和【进阶提高篇】
+- 【DevOps学院】 http://www.devopsedu.com/
 
 注意：不要相信自己，要相信电脑！！！
 
