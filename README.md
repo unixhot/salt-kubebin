@@ -100,6 +100,8 @@ linux-node3.example.com
    kernel.sysrq = 1
    
    #iptables透明网桥的实现
+   # NOTE: kube-proxy 要求 NODE 节点操作系统中要具备 /sys/module/br_netfilter 文件，而且还要设置 bridge-nf-call-iptables=1，如果不满足要求，那么 kube-proxy 只是将检查信息记录到日志中，kube-proxy 仍然会正常运行，但是这样通过 Kube-proxy 设置的某些 iptables 规则就不会工作。
+   
    net.bridge.bridge-nf-call-ip6tables = 1
    net.bridge.bridge-nf-call-iptables = 1
    net.bridge.bridge-nf-call-arptables = 1
@@ -109,7 +111,7 @@ linux-node3.example.com
    5.以上必备条件必须严格检查，否则，一定不会部署成功！
 
 ## 1.设置部署节点到其它所有节点的SSH免密码登录（包括本机）
-```
+```bash
 [root@linux-node1 ~]# ssh-keygen -t rsa
 [root@linux-node1 ~]# ssh-copy-id linux-node1
 [root@linux-node1 ~]# ssh-copy-id linux-node2
