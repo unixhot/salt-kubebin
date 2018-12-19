@@ -20,19 +20,19 @@ systemctl disable --now dnsmasq
 ```bash
 yum install chrony -y
 cat <<EOF > /etc/chrony.conf
-> server ntp.aliyun.com iburst
-> stratumweight 0
-> driftfile /var/lib/chrony/drift
-> rtcsync
-> makestep 10 3
-> bindcmdaddress 127.0.0.1
-> bindcmdaddress ::1
-> keyfile /etc/chrony.keys
-> commandkey 1
-> generatecommandkey
-> logchange 0.5
-> logdir /var/log/chrony
-> EOF
+server ntp.aliyun.com iburst
+stratumweight 0
+driftfile /var/lib/chrony/drift
+rtcsync
+makestep 10 3
+bindcmdaddress 127.0.0.1
+bindcmdaddress ::1
+keyfile /etc/chrony.keys
+commandkey 1
+generatecommandkey
+logchange 0.5
+logdir /var/log/chrony
+EOF
 
 systemctl restart chronyd
 ```
