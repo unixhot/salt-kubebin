@@ -46,7 +46,7 @@
 ## 案例架构图
 
   ![架构图](https://github.com/unixhot/salt-kubernetes/blob/master/docs/K8S.png)
-  
+
 ## 0.系统初始化(必备)
 1. 设置主机名！！！
 ```
@@ -72,10 +72,46 @@ linux-node3.example.com
 ```
 3. 关闭SELinux和防火墙
 
-4.以上必备条件必须严格检查，否则，一定不会部署成功！
+4. 优化内核参数
+
+   ```bash
+   # For more information, see sysctl.conf(5) and sysctl.d(5).
+   net.ipv6.conf.all.disable_ipv6 = 1
+   net.ipv6.conf.default.disable_ipv6 = 1
+   net.ipv6.conf.lo.disable_ipv6 = 1
+   
+   vm.swappiness = 0
+   net.ipv4.neigh.default.gc_stale_time=120
+   net.ipv4.ip_forward = 1
+   
+   # see details in https://help.aliyun.com/knowledge_detail/39428.html
+   net.ipv4.conf.all.rp_filter=0
+   net.ipv4.conf.default.rp_filter=0
+   net.ipv4.conf.default.arp_announce = 2
+   net.ipv4.conf.lo.arp_announce=2
+   net.ipv4.conf.all.arp_announce=2
+   
+   
+   # see details in https://help.aliyun.com/knowledge_detail/41334.html
+   net.ipv4.tcp_max_tw_buckets = 5000
+   net.ipv4.tcp_syncookies = 1
+   net.ipv4.tcp_max_syn_backlog = 1024
+   net.ipv4.tcp_synack_retries = 2
+   kernel.sysrq = 1
+   
+   #iptables透明网桥的实现
+   # NOTE: kube-proxy 要求 NODE 节点操作系统中要具备 /sys/module/br_netfilter 文件，而且还要设置 bridge-nf-call-iptables=1，如果不满足要求，那么 kube-proxy 只是将检查信息记录到日志中，kube-proxy 仍然会正常运行，但是这样通过 Kube-proxy 设置的某些 iptables 规则就不会工作。
+   
+   net.bridge.bridge-nf-call-ip6tables = 1
+   net.bridge.bridge-nf-call-iptables = 1
+   net.bridge.bridge-nf-call-arptables = 1
+   
+   ```
+
+   5.以上必备条件必须严格检查，否则，一定不会部署成功！
 
 ## 1.设置部署节点到其它所有节点的SSH免密码登录（包括本机）
-```
+```bash
 [root@linux-node1 ~]# ssh-keygen -t rsa
 [root@linux-node1 ~]# ssh-copy-id linux-node1
 [root@linux-node1 ~]# ssh-copy-id linux-node2
@@ -232,6 +268,7 @@ NAME            STATUS    ROLES     AGE       VERSION
 192.168.56.13   Ready     <none>    1m        v1.10.3
 ```
 ## 7.测试Kubernetes集群和Flannel网络
+
 ```
 [root@linux-node1 ~]# kubectl run net-test --image=alpine --replicas=2 sleep 360000
 deployment "net-test" created
@@ -257,6 +294,16 @@ PING 10.2.24.2 (10.2.24.2) 56(84) bytes of data.
 --- 10.2.24.2 ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
 rtt min/avg/max/mdev = 22.960/22.960/22.960/0.000 ms
+
+
+确认服务能够执行 logs exec 等指令;kubectl logs -f net-test-5767cb94df-n9lvk,此时会出现如下报错:
+[root@linux-node1 ~]# kubectl logs net-test-5767cb94df-n9lvk
+error: You must be logged in to the server (the server has asked for the client to provide credentials ( pods/log net-test-5767cb94df-n9lvk))
+
+
+由于上述权限问题，我们必需创建一个 apiserver-to-kubelet-rbac.yml 来定义权限，以供我们执行 logs、exec 等指令;
+[root@linux-node1 ~]# kubectl apply -f /srv/addons/apiserver-to-kubelet-rbac.yml
+然后执行kubctl logs验证是否成功.
 ```
 ## 8.如何新增Kubernetes节点
 

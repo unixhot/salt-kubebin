@@ -1,4 +1,13 @@
 {
-	  "registry-mirrors": ["https://tdimi5q1.mirror.aliyuncs.com"],
-  	  "insecure-registries" : ["registry.devopsedu.com:5000", "192.168.56.11:5000"]
+	  "registry-mirrors": ["https://dx5z2hy7.mirror.aliyuncs.com"],
+	  "storage-driver": "overlay2",
+      "storage-opts": [
+      "overlay2.override_kernel_check=true"
+  ],
+      "log-driver": "json-file",
+      "log-opts": {
+      "max-size": "100m",
+      "max-file": "3"
+  }
+  	  
 }
