@@ -3,7 +3,6 @@ Description=Etcd Server
 After=network.target
 
 [Service]
-Type=simple
 WorkingDirectory=/var/lib/etcd
 EnvironmentFile=-/opt/kubernetes/cfg/etcd.conf
 # set GOMAXPROCS to number of processors
