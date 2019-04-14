@@ -32,8 +32,6 @@ subjects:
   - apiGroup: rbac.authorization.k8s.io
     kind: User
     name: system:anonymous
-[root@kube-master37 yaml]# kubectl apply -f apiserver-to-kubelet-rbac.yml ^C
-[root@kube-master37 yaml]# cat apiserver-to-kubelet-rbac.yml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
