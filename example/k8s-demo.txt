@@ -12,7 +12,7 @@ kubectl get pod -o wide
 curl --head 10.2.83.17
 
 5.更新Deployment
-kubectl set image deployment/nginx-deployment nginx=nginx:1.12.2 --record
+kubectl set image deployment/nginx-deployment nginx=nginx:1.14.2 --record
 
 6.查看更新后的Deployment
 kubectl get deployment -o wide
