@@ -72,12 +72,15 @@ linux-node3.example.com
 ```
 3. 关闭SELinux和防火墙
 4. 更新yum源
+```
 [root@linux-node1 ~]# rpm -ivh http://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
+```
 5. 安装一些依赖包
+```
 [root@linux-node1 ~]# yum install -y net-tools vim lrzsz screen lsof tcpdump nc mtr nmap wget
+```
 
-
-4. 优化内核参数
+6. 优化内核参数
 
    ```bash
    # For more information, see sysctl.conf(5) and sysctl.d(5).
