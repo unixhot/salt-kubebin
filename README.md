@@ -134,16 +134,16 @@ SELINUX=disabled #修改为disabled
 
 2.2 安装Salt SSH（注意：老版本的Salt SSH不支持Roster定义Grains，需要2017.7.4以上版本）
 ```
-[root@linux-node1 ~]# yum install https://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
-[root@linux-node1 ~]# yum install https://mirrors.aliyun.com/saltstack/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
+[root@linux-node1 ~]# yum install -y https://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
+[root@linux-node1 ~]# yum install -y https://mirrors.aliyun.com/saltstack/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
 [root@linux-node1 ~]# sed -i "s/repo.saltstack.com/mirrors.aliyun.com\/saltstack/g" /etc/yum.repos.d/salt-latest.repo
 [root@linux-node1 ~]# yum install -y salt-ssh git unzip
 ```
 
 2.3 获取本项目代码，并放置在/srv目录
 ```
-[root@linux-node1 ~]# git clone https://github.com/unixhot/salt-kubernetes.git
-[root@linux-node1 ~]# cd salt-kubernetes/
+[root@linux-node1 ~]# git clone https://github.com/unixhot/salt-k8s.git
+[root@linux-node1 ~]# cd salt-k8sc/
 [root@linux-node1 ~]# mv * /srv/
 [root@linux-node1 srv]# /bin/cp /srv/roster /etc/salt/roster
 [root@linux-node1 srv]# /bin/cp /srv/master /etc/salt/master
