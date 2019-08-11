@@ -28,7 +28,8 @@
 ## 3.准备软件包
 ```
 百度网盘下载地址：
-[https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw](https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw)
+
+链接: https://pan.baidu.com/s/1nVeiDHy0e4CAYcORPqw9vg 提取码: 563c
 ```
 
 ## 4.解压软件包
