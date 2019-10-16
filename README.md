@@ -142,8 +142,8 @@ SELINUX=disabled #修改为disabled
 
 2.3 获取本项目代码，并放置在/srv目录
 ```
-[root@linux-node1 ~]# git clone https://github.com/unixhot/salt-k8s.git
-[root@linux-node1 ~]# cd salt-k8sc/
+[root@linux-node1 ~]# git clone https://github.com/unixhot/salt-kubebin.git
+[root@linux-node1 ~]# cd salt-kubebin/
 [root@linux-node1 ~]# mv * /srv/
 [root@linux-node1 srv]# /bin/cp /srv/roster /etc/salt/roster
 [root@linux-node1 srv]# /bin/cp /srv/master /etc/salt/master
